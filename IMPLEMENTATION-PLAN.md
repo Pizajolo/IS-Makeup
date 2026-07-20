@@ -10,8 +10,10 @@
 
 Nothing else starts until the current work is safe in git.
 
-- [ ] Commit the current site — `styles.css`, `script.js`, `es/`, `pt/`, `sitemap.xml`, `robots.txt` are all untracked and `index.html` is modified
+- [x] Commit the current site — `styles.css`, `script.js`, `es/`, `pt/`, `sitemap.xml`, `robots.txt` were untracked and `index.html` was modified (commit `3286e8a`)
+- [x] Add `.gitignore` for macOS cruft and Astro build output
 - [ ] Decide on `tweaks-panel.jsx` (currently deleted in working tree) — confirm it's intentionally gone
+- [ ] **Decide where media lives** — `assets/` is untracked, so Cloudflare Pages currently has no images to deploy (see Open questions)
 
 ---
 
@@ -117,6 +119,7 @@ Drafts only. Inés reviews before anything publishes — her Portuguese beats an
 
 ## Open questions
 
+- **Where does media live?** `assets/` is untracked and history has been purged clean (repo is 460K). Cloudflare Pages builds from the repo, so nothing in `assets/` will deploy as things stand. The images are only ~1.6MB total once optimized — small enough to track in git without concern. The 47MB is almost entirely the four videos. Likely answer: optimized images in git, video on YouTube or R2.
 - Who owns `ismakeup.pt`, and is it registered yet?
 - Is `tweaks-panel.jsx` intentionally deleted?
 - Does the schema's placeholder phone number (`+351900000000`) need replacing before launch?
