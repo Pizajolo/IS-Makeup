@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Node / Astro (Phase 1)
+node_modules/
+dist/
+.astro/
+.env
+.env.*
