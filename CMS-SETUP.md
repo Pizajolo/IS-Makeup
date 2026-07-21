@@ -7,36 +7,51 @@ Roughly 20 minutes end to end.
 
 ---
 
-## 0. Test it first, without any of this
+## 0. Test it locally first — no GitHub, no Worker, no token
 
-Sveltia can sign in with a GitHub personal access token, which skips the OAuth
-app and the Worker entirely. Do this before the rest — if something in the
-config is wrong, you want to find out now rather than after wiring up auth.
+Sveltia can edit the repo on your own disk. This is the fastest way to check the
+config is right, and nothing it writes leaves your machine until you commit it.
 
-1. GitHub → **Settings** → **Developer settings** → **Personal access tokens** →
-   **Fine-grained tokens** → **Generate new token**
-2. Repository access: only `Pizajolo/IS-Makeup`
-3. Permissions: **Contents** → *Read and write*
-4. Visit `https://is-makeup.pages.dev/admin/` and choose **Sign In with Token**
+```sh
+npm run dev
+```
+
+Open **`http://localhost:4321/admin/index.html`** in Chrome or Edge, click
+**Work with Local Repository**, and pick this repo's folder when prompted.
+
+> Use the full `/admin/index.html` path locally. Astro's dev server doesn't
+> resolve directory indexes inside `public/`, so plain `/admin/` 404s — on
+> Cloudflare Pages `/admin/` works normally. Local mode needs the File System
+> Access API, so Chrome or Edge, not Firefox or Safari.
 
 You should see the Journal collection with the two seed posts, each switchable
 between EN / PT / ES.
 
 **Check these three things specifically** — they're the parts I couldn't verify
-without a live login:
+without a live session, and local mode makes all three inspectable with
+`git diff`:
 
-- Open a post, switch to Portuguese, confirm the title and body change and the
-  cover photo stays. That's `i18n: duplicate` vs `true` behaving correctly.
-- Drag an image into the body. Confirm the committed file lands in
-  `src/assets/blog/` and the markdown reference reads `../../../assets/blog/…`.
-  This is the one config detail I'd most expect to need adjusting — relative
-  `media_folder` resolution is subtle, and getting it wrong means body images
+- Open a post, switch to Portuguese. Title, summary, body and cover-photo
+  description should change; the cover photo itself should stay. That's
+  `i18n: duplicate` vs `i18n: true` behaving correctly.
+- Drag an image into the body, save, then `git status`. The file should land in
+  `src/assets/blog/` and the markdown should read `../../../assets/blog/…`.
+  **This is the detail I'd most expect to need adjusting** — relative
+  `media_folder` resolution is subtle, and if it's wrong, body images silently
   stop being optimised.
-- Make a table in the rich text editor. If the toolbar has no table button,
-  she'd have to use the raw-markdown toggle, which defeats the point — tell me
-  and I'll look at alternatives.
+- Try to make a table in the rich text editor. If there's no table button, Inés
+  would have to use the raw-markdown toggle, which defeats the point of choosing
+  Sveltia — tell me and I'll look at alternatives.
 
-Revoke the token afterwards if you like; it isn't needed once OAuth works.
+`git checkout .` throws away anything you did while testing.
+
+### Testing against the real repo instead
+
+If you'd rather test the actual GitHub round-trip before setting up OAuth, use a
+personal access token: GitHub → **Settings** → **Developer settings** →
+**Personal access tokens** → **Fine-grained tokens**, repository access limited
+to `Pizajolo/IS-Makeup`, permission **Contents: Read and write**. Then **Sign In
+Using Access Token** on the deployed `/admin/`. Revoke it once OAuth works.
 
 ---
 

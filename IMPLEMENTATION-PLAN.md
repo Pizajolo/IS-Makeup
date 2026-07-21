@@ -134,7 +134,7 @@ Localized slugs survived the move to the CMS: Sveltia's `{{title | localize}}` l
 - [ ] Grant Inés repo access at the minimum level that works — Write, which is the floor for committing
 - [ ] Test the full flow end to end as a non-admin user
 
-**Verify on first login** (couldn't be checked without a live session): that relative `media_folder` resolves so body images land in `src/assets/blog/` and stay Astro-optimised; that `i18n: duplicate` keeps one cover photo across locales while the text translates; that the rich text toolbar has a table button.
+**Verify before handoff** — Sveltia's *Work with Local Repository* mode exercises all of this with no GitHub, Worker or token needed (`npm run dev`, then `/admin/index.html` in Chrome; see [CMS-SETUP.md](CMS-SETUP.md) step 0): that relative `media_folder` resolves so body images land in `src/assets/blog/` and stay Astro-optimised; that `i18n: duplicate` keeps one cover photo across locales while the text translates; that the rich text toolbar has a table button.
 
 ---
 

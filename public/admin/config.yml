@@ -25,6 +25,12 @@ logo_url: https://ismakeup.pt/assets/logo.jpg
 # editorial workflow yet; the `draft` toggle on each post is what keeps
 # unfinished writing off the live site. New posts default to draft.
 
+# A top-level media_folder is required even though the blog collection overrides
+# it below — Sveltia refuses to load the config without one. This value is what
+# the standalone Assets browser shows, so it points at the same place uploads
+# actually go.
+media_folder: src/assets/blog
+
 # Uploads are converted to WebP and capped at 2048px in the browser, before
 # anything is committed. The generous max_file_size is deliberate — it lets her
 # drag a photo straight off a phone, and the transformation is what decides
