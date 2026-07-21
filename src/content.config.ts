@@ -19,7 +19,28 @@ const blog = defineCollection({
 
       // The card grid, the OG tag and the RSS enclosure all need a guaranteed
       // image, which is why this one stays in frontmatter rather than the body.
-      heroImage: image(),
+      //
+      // The refine catches remote URLs. `image()` lets a URL through as a plain
+      // string and `astro check` stays green, but the build then dies inside
+      // route generation with a MissingImageDimension error — green locally,
+      // red on Cloudflare. Failing here turns that into a readable message
+      // before anything is pushed.
+      //
+      // Remote images are refused rather than supported on purpose: they skip
+      // the whole Phase 2 pipeline (no WebP, no srcset, no size control), they
+      // break whenever the other host moves the file, and a hotlinked stock
+      // photo carries licensing risk on a commercial site.
+      // Checks for "://" rather than a leading protocol or the resolved type.
+      // `image()` hands refine a string tagged with an internal `__ASTRO_IMAGE_`
+      // prefix and only resolves it to ImageMetadata afterwards — so a type
+      // check rejects valid local paths, and an anchored `^https?://` never
+      // matches at all. A relative path can never contain "://", which makes
+      // this independent of Astro's internal tagging.
+      heroImage: image().refine((value) => !String(value).includes('://'), {
+        message:
+          'Cover photo must be an uploaded image, not a link to another website. ' +
+          'In the CMS, drag the photo into the Cover photo field instead of pasting a URL.',
+      }),
       // Required on purpose. Alt text is the field everyone skips, and a
       // build error is the only reliable way to stop that happening.
       heroAlt: z.string().min(1, 'heroAlt is required — describe the image for screen readers'),

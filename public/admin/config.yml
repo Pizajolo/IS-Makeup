@@ -140,6 +140,11 @@ collections:
         label: Cover photo
         widget: image
         i18n: duplicate
+        # No "insert from URL". A pasted link skips the whole image pipeline —
+        # no WebP, no srcset, no size control — and breaks the build with an
+        # unhelpful error the moment Cloudflare tries to deploy it. The content
+        # schema rejects remote URLs too; this stops one being entered at all.
+        choose_url: false
 
       - name: heroAlt
         label: Cover photo description

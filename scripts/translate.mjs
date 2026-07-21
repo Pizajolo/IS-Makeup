@@ -35,6 +35,18 @@ const LOCALE_NAMES = {
   es: 'Mexican Spanish as spoken in Guadalajara — the register the rest of the site uses ("platiquemos", "apartar tu fecha", "playera"), not peninsular Spanish',
 };
 
+// How the site addresses the reader, which differs by language and is not
+// something a translator infers. The Portuguese copy is formal throughout
+// ("a sua pele", "o seu casamento") while the Spanish is informal
+// ("cuéntame de tu día", "apartar tu fecha"). Left unstated, the model picked
+// informal Portuguese — so a bride was addressed formally on the homepage and
+// informally two clicks later in the journal.
+const FORM_OF_ADDRESS = {
+  en: 'Second person ("you"), as English has no formal/informal distinction.',
+  pt: 'FORMAL third person — "você" implied, "a sua pele", "o seu casamento", "espera". Never the informal "tu" forms ("a tua pele", "vais", "esperas"). The rest of the site is formal and the journal must match.',
+  es: 'INFORMAL second person — "tú", "tu día", "esperas", "cuéntame". The rest of the site is informal and the journal must match. Do not use "usted".',
+};
+
 // Locale prefix for internal links back into the main site.
 const SITE_PREFIX = { en: '/', pt: '/pt/', es: '/es/' };
 
@@ -125,6 +137,9 @@ VOICE
 The posts are written in Inés's own first person — warm, direct, specific, and unhurried. She is a working artist talking to a bride, not a brand talking to a market. Keep contractions and asides. Where the source is plain, stay plain; do not smooth her voice into marketing copy, and do not add enthusiasm she did not write.
 
 Translate the meaning, not the words. Idioms should become the natural equivalent in the target language, not a literal rendering. If a sentence would sound stilted translated directly, rewrite it so it reads as though she wrote it in that language to begin with.
+
+FORM OF ADDRESS — match the rest of the site exactly
+${FORM_OF_ADDRESS[to]}
 
 GLOSSARY
 ${glossaryFor(to)}
@@ -286,7 +301,7 @@ async function main() {
 // concatenation: this repo's path contains a space, which import.meta.url
 // percent-encodes and a hand-built `file://${argv[1]}` does not — the naive
 // comparison silently never matches.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch(reportAndExit);
 }
 
