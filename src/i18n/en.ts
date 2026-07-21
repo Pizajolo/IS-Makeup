@@ -204,7 +204,7 @@ const en = {
         a: 'Bridal day‑of makeup starts at €450 and includes a full trial session, skin prep, lashes and a long‑wear finish. Bridal party makeup starts at €120 per person. Travel outside Lisbon is quoted separately with your proposal — no hidden extras.',
       },
       {
-        q: 'Do you travel to weddings outside Lisbon — Sintra, Cascais, Comporta, the Algarve?',
+        q: 'Do you travel to weddings outside Lisbon — Sintra, Cascais, Comporta or the Algarve?',
         a: "Yes. I work across Portugal's wedding regions — Sintra, Cascais, Comporta, the Douro Valley and the Algarve — as well as destination weddings elsewhere in Europe. Travel and, where needed, accommodation are quoted transparently with your proposal.",
       },
       {
@@ -212,11 +212,11 @@ const en = {
         a: 'I do — Guadalajara is where I was born and learned to love this craft. I take a small number of weddings in Jalisco and across Mexico each year. Because of the travel involved, Mexican dates are best reserved well in advance.',
       },
       {
-        q: 'How far in advance should I book?',
+        q: 'How far in advance should I book my wedding makeup artist?',
         a: "Bookings open 12 months ahead, and peak dates in Portugal — May to October weekends — usually go 9 to 12 months in advance. Weekday and off‑season dates are more flexible, and last‑minute enquiries are always welcome: if I'm free, I'm yours.",
       },
       {
-        q: 'Is a trial included — and what happens at the trial?',
+        q: 'Is a makeup trial included — and what happens at the trial?',
         a: 'Every bridal day‑of booking includes one trial: a relaxed two‑hour session, usually about six weeks before the wedding, where we refine the look, test products on your skin, and photograph the result in different light so there are no surprises on the day.',
       },
       {
