@@ -19,7 +19,14 @@ backend:
 
 site_url: https://ismakeup.pt
 display_url: https://ismakeup.pt
-logo_url: https://ismakeup.pt/assets/logo.jpg
+# Root-relative on purpose: this resolves against whatever host is serving the
+# CMS, so the logo shows on is-makeup.pages.dev today and on ismakeup.pt once
+# DNS moves in Phase 6. An absolute ismakeup.pt URL renders broken until then.
+#
+# The transparent PNG rather than logo.jpg — the source is a coral circle on a
+# white square, which reads as a white box against Sveltia's dark UI. The site's
+# own topbar crops it with border-radius; the CMS can't, so the crop is baked in.
+logo_url: /assets/logo-mark.png
 
 # No `publish_mode`, so saves commit straight to main. Sveltia has not shipped
 # editorial workflow yet; the `draft` toggle on each post is what keeps
