@@ -4,7 +4,7 @@ title: Test
 description: Test post only, so all good!
 date: 2026-07-21
 updated: 2026-07-21
-heroImage: ../../../assets/bride.jpg
+heroImage: https://img.magnific.com/free-photo/elegant-wedding-couple_1157-18557.jpg?semt=ais_hybrid&w=740&q=80
 heroAlt: Test image only
 tags: []
 location: ''
@@ -31,6 +31,10 @@ None of this is guesswork by the wedding morning. That's what the trial is for.
 1. **A primer chosen for your skin, not for the finish.** Grip primers and blurring primers do opposite jobs. Using the wrong one is worse than using none.
 2. **Waterproof on the eyes, always.** Liner, mascara, and lashes if you're wearing them. This is non-negotiable at a wedding.
 3. **A blotted, layered lip.** Colour, blot, colour again. It outlasts anything applied in one pass, and it survives a glass of wine.
+
+![](https://img.magnific.com/free-photo/elegant-wedding-couple_1157-18557.jpg?semt=ais_hybrid&w=740&q=80)
+
+![](https://img.magnific.com/free-photo/elegant-wedding-couple_1157-18557.jpg?semt=ais_hybrid&w=740&q=80)
 
 ![This is a wedding image](https://img.magnific.com/free-photo/elegant-wedding-couple_1157-18557.jpg?semt=ais_hybrid&w=740&q=80)
 
