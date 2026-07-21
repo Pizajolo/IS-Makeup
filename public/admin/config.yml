@@ -1,0 +1,164 @@
+# Sveltia CMS — I.S Makeup
+#
+# Read this alongside CMS-SETUP.md, which covers the GitHub OAuth app and the
+# Cloudflare Worker that `base_url` below points at.
+#
+# Design rule carried over from the implementation plan: posts are documents,
+# not forms. Frontmatter here is metadata only. Everything visual — subheadings,
+# photos, tables, links, videos — lives in the single `body` field, so Inés can
+# put anything anywhere, as many times as she likes.
+
+backend:
+  name: github
+  repo: Pizajolo/IS-Makeup
+  branch: main
+  # TODO: replace with the deployed sveltia-cms-auth Worker URL — see CMS-SETUP.md.
+  # Until this is real, sign in with "Sign In with Token" (a GitHub PAT), which
+  # ignores base_url entirely and is fine for your own testing.
+  base_url: https://REPLACE-ME.workers.dev
+
+site_url: https://ismakeup.pt
+display_url: https://ismakeup.pt
+logo_url: https://ismakeup.pt/assets/logo.jpg
+
+# No `publish_mode`, so saves commit straight to main. Sveltia has not shipped
+# editorial workflow yet; the `draft` toggle on each post is what keeps
+# unfinished writing off the live site. New posts default to draft.
+
+# Uploads are converted to WebP and capped at 2048px in the browser, before
+# anything is committed. The generous max_file_size is deliberate — it lets her
+# drag a photo straight off a phone, and the transformation is what decides
+# what actually lands in git. This is the guardrail against repo bloat.
+media_libraries:
+  all:
+    max_file_size: 20971520 # 20 MB in, a few hundred KB out
+    transformations:
+      raster_image:
+        format: webp
+        quality: 85
+        width: 2048
+        height: 2048
+
+i18n:
+  # Matches the folders Phase 3 created: src/content/blog/{en,pt,es}/
+  structure: multiple_folders
+  locales: [en, pt, es]
+  default_locale: en
+
+collections:
+  - name: blog
+    label: Journal
+    label_singular: Post
+    description: >-
+      Notes and tips for brides. Write in English first — the Portuguese and
+      Spanish versions live behind the language switcher at the top right of the
+      editor.
+    folder: src/content/blog
+    create: true
+    # `| localize` gives each language its own filename, so the Portuguese post
+    # gets a Portuguese URL. Sveltia links the three files together by writing a
+    # `translationKey` property into each — which is exactly the field the
+    # content schema already reads.
+    slug: '{{title | localize}}'
+    i18n: true
+
+    # Preview pane off by design. It would have to be a second, hand-written
+    # copy of the Astro post template, and it would drift. The Cloudflare
+    # preview deployment shows the real thing instead.
+    editor:
+      preview: false
+
+    # Relative, so it resolves to src/assets/blog/ and the path written into the
+    # markdown stays relative too. That is what lets Astro and Sharp optimise
+    # body images into WebP with a srcset — an absolute /uploads/ path would be
+    # copied through untouched.
+    media_folder: ../../../assets/blog
+    public_folder: ../../../assets/blog
+
+    fields:
+      - name: title
+        label: Title
+        widget: string
+        i18n: true
+
+      - name: description
+        label: Summary
+        hint: >-
+          One or two sentences. This is what shows on the journal cards, in
+          Google results, and when someone shares the post.
+        widget: text
+        i18n: true
+
+      - name: date
+        label: Published
+        widget: datetime
+        date_format: 'YYYY-MM-DD'
+        time_format: false
+        picker_utc: true
+        # Same date in all three languages — it is one post, published once.
+        i18n: duplicate
+
+      - name: updated
+        label: Last updated
+        hint: Only fill this in if you substantially rewrite the post later.
+        widget: datetime
+        date_format: 'YYYY-MM-DD'
+        time_format: false
+        picker_utc: true
+        required: false
+        i18n: duplicate
+
+      - name: heroImage
+        label: Cover photo
+        widget: image
+        i18n: duplicate
+
+      - name: heroAlt
+        label: Cover photo description
+        hint: >-
+          Describe the photo in a few words, for readers using a screen reader
+          and for Google. For example: "Bride with soft bridal makeup, Sintra".
+        widget: string
+        # Required in the editor because it is required in the content schema —
+        # a missing one fails the build. Alt text is the field everyone skips,
+        # so it is enforced in both places.
+        required: true
+        i18n: true
+
+      - name: tags
+        label: Tags
+        hint: A few words each, translated per language. Optional.
+        widget: list
+        required: false
+        i18n: true
+
+      - name: location
+        label: Location
+        hint: >-
+          Only if the post is about a specific place — Sintra, Comporta, the
+          Algarve. Helps the post show up in local searches. Leave empty
+          otherwise.
+        widget: string
+        required: false
+        i18n: duplicate
+
+      - name: draft
+        label: Draft — not visible on the site
+        hint: >-
+          Leave this on while you are still writing. Turn it off and save when
+          you are ready for the post to go live.
+        widget: boolean
+        default: true
+        i18n: duplicate
+
+      - name: body
+        label: Post
+        widget: markdown
+        i18n: true
+        # rich_text first, so that is what opens by default and Inés never sees
+        # markdown. The raw mode stays available as an escape hatch for you.
+        modes: [rich_text, raw]
+        hint: >-
+          To add a video, paste the YouTube link on a line of its own and press
+          enter. It stays a plain link here, and becomes a real embedded player
+          on the published page.

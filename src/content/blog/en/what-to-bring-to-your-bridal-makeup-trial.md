@@ -7,7 +7,7 @@ heroAlt: Inés Santiago preparing products before a bridal makeup trial in her L
 tags:
   - Trial
   - Planning
-translationKey: bridal-trial-checklist
+translationKey: what-to-bring-to-your-bridal-makeup-trial
 ---
 
 A trial is two hours, and how useful those two hours are depends almost entirely on what walks through the door with you.

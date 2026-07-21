@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--
+      Belt and braces with the Disallow in robots.txt. The admin page is public
+      by necessity — it has to be reachable for Inés to log in — but there is no
+      reason for it to appear in search results.
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Content Manager — I.S Makeup</title>
+    <link rel="icon" href="/assets/logo.jpg" />
+  </head>
+  <body>
+    <!--
+      Pinned rather than floating on @latest. Inés depends on this page to
+      publish; an upstream release should never be able to change or break it
+      overnight without someone choosing to take the update.
+
+      To upgrade: bump the version here, load /admin/ locally, and confirm a
+      post still opens and saves before committing.
+    -->
+    <script src="https://unpkg.com/@sveltia/cms@0.172.2/dist/sveltia-cms.js" type="module"></script>
+  </body>
+</html>

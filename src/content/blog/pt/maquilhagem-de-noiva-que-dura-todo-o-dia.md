@@ -7,7 +7,7 @@ heroAlt: Grande plano de maquilhagem de lábios de noiva de longa duração, fot
 tags:
   - Noivas
   - Duração
-translationKey: long-lasting-wedding-makeup
+translationKey: wedding-makeup-that-lasts-all-day
 ---
 
 Todas as noivas me fazem a mesma pergunta na prova, normalmente por volta da segunda hora: *isto ainda vai estar cá à meia-noite?*

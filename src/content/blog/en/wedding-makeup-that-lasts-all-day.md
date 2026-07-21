@@ -7,7 +7,7 @@ heroAlt: Close-up of long-wear bridal lip makeup, photographed in daylight after
 tags:
   - Bridal
   - Longevity
-translationKey: long-lasting-wedding-makeup
+translationKey: wedding-makeup-that-lasts-all-day
 ---
 
 Every bride asks me the same question at the trial, usually somewhere around the second hour: *will this still be there at midnight?*

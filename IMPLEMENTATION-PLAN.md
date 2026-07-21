@@ -111,18 +111,30 @@ The `out_crf*.mp4` experiments tuned the wrong dial. All four carry AAC audio de
 
 ## Phase 4 — Sveltia CMS
 
+Config is committed. The remaining items need GitHub and Cloudflare accounts, so
+they're yours to do — steps are in [CMS-SETUP.md](CMS-SETUP.md).
+
+**Two findings that changed this phase:**
+
+- **Sveltia has not implemented editorial workflow** (their docs say it's coming before 1.0). The `draft` boolean already in the Phase 3 schema covers the stated goal — saving half-finished posts — and the build already excludes drafts from production. What's missing is the approval gate: saves land on `main` directly. Revisit when Sveltia ships it; it's a one-line config change.
+- **No preview pane, deliberately.** The post template is Astro-rendered, so a preview would be a second hand-written copy that drifts — the exact failure Phase 1 fixed for the FAQ schema. The Cloudflare preview deployment is the honest substitute.
+
+Localized slugs survived the move to the CMS: Sveltia's `{{title | localize}}` links translations through a `translationKey` property, which is the field name Phase 3 already chose. The seed posts' keys were realigned to the English slug so a CMS edit can't break the link.
+
 - [ ] Register a GitHub OAuth app for the site
 - [ ] Deploy the OAuth proxy as a Cloudflare Worker
-- [ ] Add `/admin` with the Sveltia config
-- [ ] Configure i18n so EN/PT/ES fields appear side by side in one editor
-- [ ] Enable editorial workflow (draft → review → publish) so half-finished posts can be saved
-- [ ] Configure the rich text editor over the single markdown **body** field — Inés should never see raw markdown, and she should never be boxed into a fixed field list either
-- [ ] Verify the WYSIWYG covers headings, bold/italic, links, lists, tables and drag-drop images without dropping to source view
-- [ ] Set up live preview against the real post template — this is where a pasted YouTube link shows up as an actual embed
-- [ ] Configure media: drag-drop image upload with a size cap, committed to a defined `assets/` path
-- [ ] **Video is a pasted YouTube URL, never a file upload** — this is the guardrail against permanent git bloat
-- [ ] Grant Inés repo access at the minimum level that works
+- [x] Add `/admin` with the Sveltia config — [`public/admin/`](public/admin/), version-pinned, `noindex` + disallowed in robots.txt
+- [x] Configure i18n so EN/PT/ES fields appear side by side in one editor — `multiple_folders`, matching the folders Phase 3 created
+- [x] ~~Enable editorial workflow~~ — unavailable; `draft: true`, on by default for new posts, so nothing goes live by accident
+- [x] Configure the rich text editor over the single markdown **body** field — `rich_text` first so she never sees markdown, `raw` kept only as an escape hatch
+- [ ] Verify the WYSIWYG covers headings, bold/italic, links, lists, tables and drag-drop images without dropping to source view — **needs a live login; tables are the one I'd check first**
+- [x] ~~Set up live preview against the real post template~~ — dropped, see above
+- [x] Configure media: drag-drop image upload with a size cap, committed to a defined `assets/` path — uploads are converted to WebP and capped at 2048px **in the browser**, so a 12MP phone photo can't reach git
+- [x] **Video is a pasted YouTube URL, never a file upload** — no video widget exists in the config; the only path is the body link
+- [ ] Grant Inés repo access at the minimum level that works — Write, which is the floor for committing
 - [ ] Test the full flow end to end as a non-admin user
+
+**Verify on first login** (couldn't be checked without a live session): that relative `media_folder` resolves so body images land in `src/assets/blog/` and stay Astro-optimised; that `i18n: duplicate` keeps one cover photo across locales while the text translates; that the rich text toolbar has a table button.
 
 ---
 

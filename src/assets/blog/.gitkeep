@@ -1,0 +1,6 @@
+# Uploads from the CMS land here.
+#
+# The path is relative in config.yml (../../../assets/blog) so the markdown
+# reference stays relative too, which is what lets Astro and Sharp optimise
+# body images. Images uploaded through the CMS arrive already converted to
+# WebP and capped at 2048px.

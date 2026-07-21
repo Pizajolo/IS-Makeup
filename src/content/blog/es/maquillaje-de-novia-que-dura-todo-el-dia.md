@@ -7,7 +7,7 @@ heroAlt: Primer plano de maquillaje de labios de novia de larga duración, fotog
 tags:
   - Novias
   - Duración
-translationKey: long-lasting-wedding-makeup
+translationKey: wedding-makeup-that-lasts-all-day
 ---
 
 Todas las novias me hacen la misma pregunta en la prueba, normalmente hacia la segunda hora: *¿esto va a seguir aquí a medianoche?*

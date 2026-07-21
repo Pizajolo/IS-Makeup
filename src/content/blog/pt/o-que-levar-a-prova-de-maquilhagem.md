@@ -7,7 +7,7 @@ heroAlt: Inés Santiago a preparar produtos antes de uma prova de maquilhagem de
 tags:
   - Prova
   - Planeamento
-translationKey: bridal-trial-checklist
+translationKey: what-to-bring-to-your-bridal-makeup-trial
 ---
 
 Uma prova são duas horas, e o quanto essas duas horas rendem depende quase inteiramente do que entra pela porta consigo.
