@@ -4,7 +4,7 @@ title: Test
 description: Solo prueba de post, ¡así que todo bien!
 date: 2026-07-21
 updated: 2026-07-21
-heroImage: https://img.magnific.com/free-photo/elegant-wedding-couple_1157-18557.jpg?semt=ais_hybrid&w=740&q=80
+heroImage: /src/assets/blog/elegant-wedding-couple_1157-18557.webp
 heroAlt: Solo imagen de prueba
 tags: []
 location: ''
