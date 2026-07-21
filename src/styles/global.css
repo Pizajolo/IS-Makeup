@@ -95,7 +95,7 @@ section, .cta, [id]{scroll-margin-top:84px;}
 }
 .lang a:hover{ opacity:1; color:var(--coral); }
 /* Switcher and CTA sit in the bar on desktop, inside the dropdown on mobile. */
-.lang-in-menu, .book-in-menu{ display:none; }
+.lang-in-menu, .main-nav .book-in-menu{ display:none; }
 .lang a[aria-current="page"]{
   opacity:1;
   color:var(--coral);
@@ -616,16 +616,22 @@ section{
 .faq-list summary::-webkit-details-marker{ display:none; }
 .faq-list summary:hover{ color: var(--coral-deep); }
 .faq-list summary::after{
-  content:"+";
-  font-family:var(--display);
-  font-size:28px;
-  color:var(--coral);
+  content:"";
+  width:18px;
+  height:18px;
   flex-shrink:0;
-  line-height:1;
-  transition: transform .2s;
+  align-self:center;
+  background-image:
+    linear-gradient(var(--coral), var(--coral)),
+    linear-gradient(var(--coral), var(--coral));
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size: 100% 2.5px, 2.5px 100%;
+  transition: background-size .25s ease, transform .25s ease;
 }
 .faq-list details[open] summary::after{
-  content:"−";
+  background-size: 100% 2.5px, 2.5px 0%;
+  transform: rotate(180deg);
 }
 .faq-list .answer{
   padding: 0 4px 30px;
