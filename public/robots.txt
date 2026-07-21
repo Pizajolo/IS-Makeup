@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ismakeup.pt/sitemap.xml
+Sitemap: https://ismakeup.pt/sitemap-index.xml

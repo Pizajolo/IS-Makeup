@@ -17,6 +17,14 @@ export default defineConfig({
         defaultLocale: 'en',
         locales: { en: 'en', pt: 'pt', es: 'es' },
       },
+      // The integration emits one alternate per locale but no x-default, which
+      // the hand-written sitemap did have. Add it back pointing at English.
+      serialize(item) {
+        if (item.links) {
+          item.links = [...item.links, { lang: 'x-default', url: 'https://ismakeup.pt/' }];
+        }
+        return item;
+      },
     }),
   ],
 });

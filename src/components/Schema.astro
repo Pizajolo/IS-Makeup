@@ -29,7 +29,9 @@ const graph: Record<string, unknown>[] = [
     '@id': businessId,
     name: site.businessName,
     description: content.schema.businessDescription,
-    url: site.url + '/',
+    // Each language declares its own page URL while sharing one @id, matching
+    // what the hand-written pages did.
+    url: pageUrl,
     image: new URL(site.ogImage, site.url).href,
     logo: new URL(site.logo, site.url).href,
     email: site.email,
@@ -47,7 +49,8 @@ const graph: Record<string, unknown>[] = [
     },
     sameAs: [site.instagram],
     founder: { '@id': personId },
-    knowsLanguage: [...locales],
+    // Current locale first, as the hand-written pages had it.
+    knowsLanguage: [locale, ...locales.filter((l) => l !== locale)],
     areaServed: content.schema.areaServed.map((a) => ({
       '@type': a.type,
       name: a.name,
