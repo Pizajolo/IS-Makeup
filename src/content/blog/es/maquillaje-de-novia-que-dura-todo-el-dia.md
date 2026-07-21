@@ -1,16 +1,18 @@
 ---
+translationKey: wedding-makeup-that-lasts-all-day
 title: Maquillaje de novia que dura todo el día — cómo se construye
 description: Un maquillaje de larga duración no es un producto. Es una secuencia — preparación de la piel, la base correcta para tu tipo de piel, y dos o tres decisiones tomadas horas antes de que alguien tome una brocha.
 date: 2026-05-14
+updated: ''
 heroImage: ../../../assets/imageBrideLips.jpg
 heroAlt: Primer plano de maquillaje de labios de novia de larga duración, fotografiado a la luz del día al final de la boda
 tags:
   - Novias
   - Duración
-translationKey: wedding-makeup-that-lasts-all-day
+location: ''
 ---
 
-Todas las novias me hacen la misma pregunta en la prueba, normalmente hacia la segunda hora: *¿esto va a seguir aquí a medianoche?*
+Todas las novias me hacen la misma pregunta en la prueba, normalmente hacia la segunda hora: _¿esto va a seguir aquí a medianoche?_
 
 La respuesta honesta es que la duración tiene poco que ver con los productos que la gente imagina. No es el spray fijador. Son los veinte minutos antes de que entre la base, y un puñado de decisiones tomadas a la medida de tu piel.
 
@@ -29,7 +31,7 @@ Exfolia suavemente **tres días** antes de la boda, no la víspera. La piel reci
 Una ceremonia al aire libre en el Algarve en agosto y una recepción a la luz de las velas en una quinta de Sintra en noviembre no son el mismo trabajo. El calor, la humedad y cuánto esperas llorar cambian aquello a lo que recurro.
 
 | Tu día | Lo que funciona | Lo que evitar |
-|---|---|---|
+| --- | --- | --- |
 | Calor, exterior, verano | Base ligera de larga duración, polvo solo donde hace falta | Base pesada de cobertura total |
 | Fresco, interior, noche | Base luminosa, rubor en crema, polvo suave | Todo mate — se ve apagado con poca luz |
 | Playa o costa | Base resistente al agua, rímel a prueba de agua | Fórmulas ligeras que piden retoque |

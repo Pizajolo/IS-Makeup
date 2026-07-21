@@ -1,13 +1,15 @@
 ---
+translationKey: wedding-makeup-that-lasts-all-day
 title: Maquilhagem de noiva que dura todo o dia — como se constrói
 description: Uma maquilhagem de longa duração não é um produto. É uma sequência — preparação da pele, a base certa para o seu tipo de pele, e duas ou três decisões tomadas horas antes de alguém pegar num pincel.
 date: 2026-05-14
+updated: ''
 heroImage: ../../../assets/imageBrideLips.jpg
 heroAlt: Grande plano de maquilhagem de lábios de noiva de longa duração, fotografada à luz do dia no fim do casamento
 tags:
   - Noivas
   - Duração
-translationKey: wedding-makeup-that-lasts-all-day
+location: ''
 ---
 
 Todas as noivas me fazem a mesma pergunta na prova, normalmente por volta da segunda hora: *isto ainda vai estar cá à meia-noite?*

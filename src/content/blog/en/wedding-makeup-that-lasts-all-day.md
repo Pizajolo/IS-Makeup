@@ -1,18 +1,25 @@
 ---
+translationKey: wedding-makeup-that-lasts-all-day
 title: Wedding makeup that lasts all day — how it's actually built
 description: Long-wear bridal makeup isn't one product. It's a sequence — skin prep, the right base for your skin type, and two or three decisions made hours before anyone picks up a brush.
 date: 2026-05-14
+updated: ''
 heroImage: ../../../assets/imageBrideLips.jpg
 heroAlt: Close-up of long-wear bridal lip makeup, photographed in daylight after a full wedding day
 tags:
   - Bridal
   - Longevity
-translationKey: wedding-makeup-that-lasts-all-day
+location: ''
 ---
 
-Every bride asks me the same question at the trial, usually somewhere around the second hour: *will this still be there at midnight?*
+Every bride asks me the same question at the trial, usually somewhere around the second hour: _will this still be there at midnight?_
 
 The honest answer is that longevity has almost nothing to do with the products people expect. It isn't the setting spray. It's the twenty minutes before the base goes on, and a handful of choices made to suit your particular skin.
+
+| Heading 1 | Heading 2 | Heading 3 |
+| --- | --- | --- |
+|   |   |   |
+|   |   |   |
 
 ## It starts with skin, not makeup
 
@@ -29,7 +36,7 @@ Exfoliate gently **three days** before the wedding, not the night before. Freshl
 A garden ceremony in the Algarve in August and a candlelit reception in a Sintra quinta in November are not the same job. Heat, humidity and how much you expect to cry all change what I reach for.
 
 | Your day | What tends to work | What to avoid |
-|---|---|---|
+| --- | --- | --- |
 | Hot, outdoors, summer | Lightweight long-wear base, powder only where needed | Heavy full-coverage foundation |
 | Cool, indoors, evening | Luminous base, cream blush, gentle powder | Matte everything — it reads flat in low light |
 | Beach or coastal | Water-resistant base, waterproof mascara | Anything sheer that needs reapplying |
