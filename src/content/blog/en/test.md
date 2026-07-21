@@ -15,6 +15,12 @@ I'm Inés Santiago — a bridal makeup artist based in Lisbon, born in Guadalaja
 
 Choosing a base for the day you'll actually have
 
+| Heading 1 | Heading 2 | Heading 3 |
+| --- | --- | --- |
+|   |   |   |
+|   |   |   |
+|   |   |   |
+
 A garden ceremony in the Algarve in August and a candlelit reception in a Sintra quinta in November are not the same job. Heat, humidity and how much you expect to cry all change what I reach for.
 
 | Your day | What tends to work | What to avoid |
