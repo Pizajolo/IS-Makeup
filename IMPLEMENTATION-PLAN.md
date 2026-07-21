@@ -142,12 +142,28 @@ Localized slugs survived the move to the CMS: Sveltia's `{{title | localize}}` l
 
 Drafts only. Inés reviews before anything publishes — her Portuguese beats any model's, and PT is the highest-value market.
 
-- [ ] Write the translation script (EN markdown → PT/ES drafts, preserving frontmatter and markdown structure)
-- [ ] Pick the model — check the current Claude API reference at build time rather than assuming
-- [ ] Run it as a GitHub Action so Inés never touches a terminal
-- [ ] Have the Action open a PR or commit as **draft**, never publish directly
-- [ ] Confirm translated drafts land in the CMS editor for review
-- [ ] Add a brief glossary of brand terms that must not be translated ("I.S Makeup", service names)
+**Decisions taken before implementation:**
+
+- **Any source language, chosen targets — not EN → PT/ES.** Inés was born in Guadalajara and lives in Lisbon; English is plausibly her third language. Forcing English as the source would make her write in her weakest language and translate into her strongest, degrading the source and everything downstream. She writes in whichever language suits the post and picks which translations to generate.
+- **Model pinned to `claude-opus-4-8`**, not exposed to her — it's a cost/quality tradeoff she has no basis to evaluate, same category as raw markdown. At ~1,500 words a post the cost is roughly **$0.14 for both languages**, so no reason to economise. That number also rules out the Batch API and prompt caching: at one post a month they'd be complexity buying under two dollars a year.
+- **Commit as `draft: true`, not a pull request.** Her review happens in the CMS, not in GitHub's diff view — a PR would send her somewhere she'll never look. Drafts are already excluded from the production build, so a translation is invisible until she opens it, reads it, and turns the toggle off.
+- **Secret lives in a GitHub Environment.** Trust in Inés isn't the concern; scoping the key so only this one workflow can read it is.
+- **Glossary derived from the site's own copy, not invented.** Note the original plan said service names must not be translated — the site actually *does* translate them (`Bridal Day-Of` → `Noiva Dia do Casamento`), so that parenthetical was wrong and the glossary reflects real usage instead.
+
+- [x] Write the translation script — [`scripts/translate.mjs`](scripts/translate.mjs), any locale → any locale, structured output so there is no preamble to strip
+- [x] Pick the model — `claude-opus-4-8`, checked against the current Claude API reference rather than assumed
+- [x] Run it as a GitHub Action so Inés never touches a terminal — [`.github/workflows/translate.yml`](.github/workflows/translate.yml), tick-box language selection
+- [x] Have the Action commit as **draft**, never publish directly — `draft: true` is forced in code, not left to the model
+- [x] Confirm translated drafts land in the CMS editor for review — verified: a generated draft passes the collection schema and is excluded from the production build
+- [x] Add a brief glossary of brand terms that must not be translated — [`scripts/glossary.mjs`](scripts/glossary.mjs), derived from the site's own copy
+- [x] Preserve the Phase 3 body syntax through translation — callout labels, image paths and captions, bare YouTube URLs, table structure, and internal-link locale prefixes
+- [x] Generate a localised slug per target so translated posts keep the Phase 3 URL scheme — model proposes, code normalises (accents stripped, URL-safe enforced)
+- [ ] Create the Anthropic key with a spend limit and add it to the `translation` GitHub Environment — see [TRANSLATION.md](TRANSLATION.md)
+- [ ] Run one real translation end to end and check the Portuguese with Inés
+
+**Verified:** 15 pipeline assertions pass (post resolution, frontmatter round-trip, draft forcing, `translationKey` inheritance, date and `heroImage` preservation, slug safety); a generated draft passes `astro check` with 0 errors and does **not** appear in the build output. The live API call is the one step untested here — this environment has no key.
+
+**Note:** the entry-point guard originally compared `import.meta.url` to a hand-built `file://` string, which silently never matched because the repo path contains a space. Fixed with `pathToFileURL`; it would have worked on the runner and failed only locally, which is the worst way round.
 
 ---
 

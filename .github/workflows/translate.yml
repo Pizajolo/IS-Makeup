@@ -1,0 +1,101 @@
+name: Translate a post
+
+# Run from the Actions tab — Inés never needs a terminal.
+#
+# Everything this workflow writes is a draft, so a translation cannot reach the
+# live site on its own. It is committed to main, appears in the CMS alongside
+# the original, and stays invisible to visitors until someone reads it and
+# turns the Draft toggle off.
+
+on:
+  workflow_dispatch:
+    inputs:
+      post:
+        description: 'Which post? Its slug — the last part of its web address, e.g. wedding-makeup-that-lasts-all-day'
+        required: true
+        type: string
+      english:
+        description: 'Translate into English'
+        type: boolean
+        default: false
+      portuguese:
+        description: 'Translate into Portuguese'
+        type: boolean
+        default: true
+      spanish:
+        description: 'Translate into Spanish'
+        type: boolean
+        default: true
+      overwrite:
+        description: 'Replace translations that already exist (normally they are left alone)'
+        type: boolean
+        default: false
+
+# Two runs writing to main at once would race on the push.
+concurrency:
+  group: translate
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+
+    # Scopes ANTHROPIC_API_KEY to this one workflow rather than exposing it to
+    # every workflow in the repo. See TRANSLATION.md for setup.
+    environment: translation
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Work out which languages were ticked
+        id: targets
+        run: |
+          targets=""
+          [ "${{ inputs.english }}" = "true" ] && targets="$targets,en"
+          [ "${{ inputs.portuguese }}" = "true" ] && targets="$targets,pt"
+          [ "${{ inputs.spanish }}" = "true" ] && targets="$targets,es"
+          targets="${targets#,}"
+
+          if [ -z "$targets" ]; then
+            echo "::error::No languages selected — tick at least one before running."
+            exit 1
+          fi
+          echo "list=$targets" >> "$GITHUB_OUTPUT"
+
+      - name: Translate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          node scripts/translate.mjs \
+            --post "${{ inputs.post }}" \
+            --to "${{ steps.targets.outputs.list }}" \
+            ${{ inputs.overwrite && '--force' || '' }}
+
+      - name: Commit the drafts
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Scoped to the content directory on purpose — this job has no
+          # business committing anything else that happened to change.
+          git add src/content/blog
+
+          if git diff --staged --quiet; then
+            echo "::notice::Nothing new — those translations already existed. Tick 'Replace translations' to redo them."
+            exit 0
+          fi
+
+          git commit -m "Add ${{ steps.targets.outputs.list }} draft translations of ${{ inputs.post }}"
+          git push
+
+          echo "::notice::Drafts committed. Open the CMS to review, then switch Draft off to publish."
