@@ -164,3 +164,23 @@ it doesn't look broken to her.
 **`:::note` callouts are markdown-only.** They'll show as literal `:::note` text
 in the rich text editor. They exist for you, not for her — best not to mention
 them in the handoff.
+
+**Tables can be edited but not created.** The rich text editor renders an
+existing markdown table as a real table and lets you edit any cell, but it has
+no way to insert one, or to add and remove rows and columns. Sveltia lists
+`table` as a possible future editor component; when it ships, it's a version
+bump in `index.html`.
+
+A custom insert-a-table component was built and then removed (reverted in
+`public/admin/`). It registered fine, but its form fields wouldn't accept a
+paste and there was no way to confirm the insertion — several rounds of blind
+testing later it still didn't work, and the effort stopped being worth it.
+Don't rebuild it without first checking whether Sveltia has shipped the native
+one.
+
+**So: tables go in as raw markdown.** Switch the body field to raw mode, paste
+the pipe syntax, switch back. It survives the round trip — cells stay editable
+afterwards. Realistically this is your job, not Inés's; if a post needs a
+table, it's easier for you to add it than to teach the syntax. Worth
+considering a structured list instead, which the editor fully supports and
+which reads better on a phone than a table that has to scroll sideways.

@@ -22,14 +22,5 @@
       post still opens and saves before committing.
     -->
     <script src="https://unpkg.com/@sveltia/cms@0.172.2/dist/sveltia-cms.js" type="module"></script>
-
-    <!--
-      Separate tag rather than an inline `import` of both. Wrapping the bundle
-      in an inline module left the page blank — the CMS initialised (it set
-      data-theme on <html>) but never mounted its UI. Module scripts with src
-      execute in document order, so this still runs after the bundle, and
-      editor-components.js waits for window.CMS regardless.
-    -->
-    <script src="./editor-components.js" type="module"></script>
   </body>
 </html>
