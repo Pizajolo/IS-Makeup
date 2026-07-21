@@ -21,17 +21,18 @@ Nothing else starts until the current work is safe in git.
 
 Collapse three near-identical HTML files into one templated site. No blog yet.
 
-- [ ] Scaffold Astro in the repo (keep `assets/` and `styles.css` intact)
-- [ ] Configure i18n: `en` at `/`, `pt` at `/pt/`, `es` at `/es/` — match the existing URL structure exactly
-- [ ] Build a shared `Layout.astro` holding the `<head>`: canonical, hreflang, OG/Twitter, geo tags, theme-color
-- [ ] Port the JSON-LD `@graph` (BeautySalon, Person, areaServed) into a schema component driven by data, not copy-paste
-- [ ] Move page copy into per-language content files so text lives in one place per language
-- [ ] Port the six sections (hero, about, services, portfolio, process, faq) as components
-- [ ] Port `script.js` behaviour
-- [ ] Keep `styles.css` as-is initially — restyling and migrating at once makes failures hard to diagnose
-- [ ] Wire `@astrojs/sitemap` with hreflang output; delete the hand-written `sitemap.xml`
-- [ ] Verify all three languages render identically to the current files
-- [ ] Run the rendered output through Google's Rich Results Test — schema must survive the port
+- [x] Scaffold Astro in the repo (Astro 5.18.2, `@astrojs/sitemap`)
+- [x] Configure i18n: `en` at `/`, `pt` at `/pt/`, `es` at `/es/` — match the existing URL structure exactly
+- [x] Build a shared `Layout.astro` holding the `<head>`: canonical, hreflang, OG/Twitter, geo tags, theme-color
+- [x] Port the JSON-LD `@graph` into `Schema.astro`, driven by per-locale data; FAQPage is generated from the visible FAQ so the two cannot drift
+- [x] Move page copy into per-language content files (`src/i18n/{en,pt,es}.ts`); `Content` derives from `en.ts` so a missing translation key is a build error
+- [x] Port the six sections plus topbar, marquee, testimonial, CTA and footer as components
+- [x] Port `script.js` behaviour (kept in `public/`, inline `onclick` preserved)
+- [x] Keep `styles.css` as-is — now bundled and content-hashed by Astro
+- [x] Wire `@astrojs/sitemap` with hreflang output; delete the hand-written `sitemap.xml`
+- [x] Verify all three languages render identically — en 1124 / pt 1255 / es 1290 words, all exact matches
+- [x] `astro check` passes: 0 errors, 0 warnings across 25 files
+- [ ] Run the rendered output through Google's Rich Results Test — blocked until the site is deployed and reachable (Phase 6)
 
 ---
 
@@ -122,5 +123,6 @@ Drafts only. Inés reviews before anything publishes — her Portuguese beats an
 - **Where does media live?** `assets/` is untracked and history has been purged clean (repo is 460K). Cloudflare Pages builds from the repo, so nothing in `assets/` will deploy as things stand. The images are only ~1.6MB total once optimized — small enough to track in git without concern. The 47MB is almost entirely the four videos. Likely answer: optimized images in git, video on YouTube or R2.
 - Who owns `ismakeup.pt`, and is it registered yet?
 - Is `tweaks-panel.jsx` intentionally deleted?
-- Does the schema's placeholder phone number (`+351900000000`) need replacing before launch?
-- Restyle during the Astro port, or strictly port-then-restyle?
+- Does the schema's placeholder phone number (`+351900000000`) need replacing before launch? Marked with a TODO in `src/data/site.ts`.
+- Restyle during the Astro port, or strictly port-then-restyle? — resolved: ported first, `styles.css` untouched.
+- **The old hand-written schema drifted from the visible FAQ.** Three EN questions and several answers differed between the JSON-LD and the page text (e.g. schema asked "How far in advance should I book my wedding makeup artist?" while the page asked "How far in advance should I book?"). Google requires FAQPage answers to match on-page content, so the port now generates schema from the visible FAQ. The old schema wording was more keyword-rich — worth considering whether to move that phrasing into the visible questions instead.
