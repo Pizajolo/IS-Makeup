@@ -218,6 +218,19 @@ async function main() {
     process.exit(1);
   }
 
+  // Checked up front rather than left to the SDK. Without this the run gets as
+  // far as printing "translating…" and then fails with an SDK-internal message
+  // about resolving authentication methods — alarming and meaningless to
+  // anyone who didn't set this up.
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.error(
+      'Translation is not set up yet — ANTHROPIC_API_KEY is missing.\n' +
+        'See TRANSLATION.md for how to create the key and add it to the\n' +
+        '"translation" GitHub Environment. Nothing was changed.',
+    );
+    process.exit(1);
+  }
+
   const found = await findPost(values.post);
   const raw = await readFile(found.path, 'utf8');
   const source = { ...found, ...splitFrontmatter(raw) };

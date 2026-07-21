@@ -6,6 +6,36 @@ a human opens it in the CMS, reads it, and turns the toggle off.
 
 ---
 
+## Turning it on and off
+
+**It is opt-in already.** There is no automatic trigger — the workflow only runs
+when someone opens the Actions tab, picks a post, ticks languages and clicks
+Run. Writing or publishing a post never starts a translation.
+
+| You want | Do this |
+|---|---|
+| No translation at all | Delete `.github/workflows/translate.yml` and skip the setup below |
+| Translation available, used when wanted | Do the setup below. That's it. |
+| This post translated, that one not | Only run it for the one you want — that is the whole mechanism |
+
+The API key is the master switch: without it the script stops immediately with
+"Translation is not set up yet" and changes nothing. Even so, **delete the
+workflow file if you decide against translation** rather than leaving it in
+place — a button in Inés's Actions tab that always fails is worse than no
+button.
+
+Undoing a translation means deleting a draft file, which was never visible to
+visitors anyway. Re-running is safe: existing translations are skipped unless
+**Replace translations** is ticked, so an accidental run can't overwrite her
+edits.
+
+**Deliberately not built: an automatic trigger on push.** It would produce three
+translations of every typo fix and pile up drafts faster than anyone reviews
+them. Her review is the scarce resource here — making generation cheaper does
+not help.
+
+---
+
 ## One-time setup
 
 ### 1. Create an API key with a spend limit

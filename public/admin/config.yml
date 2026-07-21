@@ -58,6 +58,21 @@ i18n:
   locales: [en, pt, es]
   default_locale: en
 
+  # Only English is switched on when a new post is created. Without this,
+  # Sveltia enforces every required field in every locale — unlike Decap, which
+  # only checked the default — so a new post could not be saved until all three
+  # languages were written. That makes "write one language now, translate
+  # later" impossible, which is the entire point of the translation workflow.
+  #
+  # Portuguese and Spanish are switched on per post from the three-dot menu at
+  # the top right of the editor, or they appear on their own once the
+  # translation workflow has written those files.
+  #
+  # Note this keeps `required` meaningful: a locale that is switched off gets no
+  # file at all, so there is no half-empty entry for the content schema to
+  # reject at build time.
+  initial_locales: default
+
 collections:
   - name: blog
     label: Journal

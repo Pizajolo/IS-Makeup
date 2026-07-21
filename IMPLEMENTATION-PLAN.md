@@ -134,6 +134,10 @@ Localized slugs survived the move to the CMS: Sveltia's `{{title | localize}}` l
 - [ ] Grant Inés repo access at the minimum level that works — Write, which is the floor for committing
 - [ ] Test the full flow end to end as a non-admin user
 
+**Found in use:** Sveltia enforces required fields across *every enabled locale*, where Decap only enforced the default one. With `title`, `description`, `heroAlt` and the body all `i18n: true` and required, a new post could not be saved until all three languages were written — which makes Phase 5's "write one language, translate later" impossible. Fixed with `initial_locales: default`, so only English is enabled on a new post and the other locales switch on from the editor's three-dot menu, or appear on their own once the translation workflow writes those files. A locale that is switched off gets no file at all, so `required` keeps protecting the build rather than becoming decorative.
+
+**Consequence for Phase 5:** Sveltia always enables the default locale, so **English is now the required source language in the CMS** — Portuguese-first authoring only works through the command line. That contradicts the "any source language" decision recorded under Phase 5. Options are to accept English-first authoring, or to make `pt` the `default_locale`. Unresolved.
+
 **Verify before handoff** — Sveltia's *Work with Local Repository* mode exercises all of this with no GitHub, Worker or token needed (`npm run dev`, then `/admin/index.html` in Chrome; see [CMS-SETUP.md](CMS-SETUP.md) step 0): that relative `media_folder` resolves so body images land in `src/assets/blog/` and stay Astro-optimised; that `i18n: duplicate` keeps one cover photo across locales while the text translates; that the rich text toolbar has a table button.
 
 ---
@@ -158,7 +162,7 @@ Drafts only. Inés reviews before anything publishes — her Portuguese beats an
 - [x] Add a brief glossary of brand terms that must not be translated — [`scripts/glossary.mjs`](scripts/glossary.mjs), derived from the site's own copy
 - [x] Preserve the Phase 3 body syntax through translation — callout labels, image paths and captions, bare YouTube URLs, table structure, and internal-link locale prefixes
 - [x] Generate a localised slug per target so translated posts keep the Phase 3 URL scheme — model proposes, code normalises (accents stripped, URL-safe enforced)
-- [ ] Create the Anthropic key with a spend limit and add it to the `translation` GitHub Environment — see [TRANSLATION.md](TRANSLATION.md)
+- [x] Create the Anthropic key with a spend limit and add it to the `translation` GitHub Environment — see [TRANSLATION.md](TRANSLATION.md)
 - [ ] Run one real translation end to end and check the Portuguese with Inés
 
 **Verified:** 15 pipeline assertions pass (post resolution, frontmatter round-trip, draft forcing, `translationKey` inheritance, date and `heroImage` preservation, slug safety); a generated draft passes `astro check` with 0 errors and does **not** appear in the build output. The live API call is the one step untested here — this environment has no key.
