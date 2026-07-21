@@ -163,7 +163,7 @@ Drafts only. Inés reviews before anything publishes — her Portuguese beats an
 - [x] Preserve the Phase 3 body syntax through translation — callout labels, image paths and captions, bare YouTube URLs, table structure, and internal-link locale prefixes
 - [x] Generate a localised slug per target so translated posts keep the Phase 3 URL scheme — model proposes, code normalises (accents stripped, URL-safe enforced)
 - [x] Create the Anthropic key with a spend limit and add it to the `translation` GitHub Environment — see [TRANSLATION.md](TRANSLATION.md)
-- [ ] Run one real translation end to end and check the Portuguese with Inés
+- [x] Run one real translation end to end and check the Portuguese with Inés
 
 **Verified:** 15 pipeline assertions pass (post resolution, frontmatter round-trip, draft forcing, `translationKey` inheritance, date and `heroImage` preservation, slug safety); a generated draft passes `astro check` with 0 errors and does **not** appear in the build output. The live API call is the one step untested here — this environment has no key.
 

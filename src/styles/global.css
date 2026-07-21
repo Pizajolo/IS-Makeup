@@ -94,6 +94,8 @@ section, .cta, [id]{scroll-margin-top:84px;}
   transition:opacity .2s, color .2s;
 }
 .lang a:hover{ opacity:1; color:var(--coral); }
+/* Switcher and CTA sit in the bar on desktop, inside the dropdown on mobile. */
+.lang-in-menu, .book-in-menu{ display:none; }
 .lang a[aria-current="page"]{
   opacity:1;
   color:var(--coral);
@@ -1244,10 +1246,29 @@ footer{
     border-top:1px solid var(--rule);
   }
   .main-nav a:first-child{ border-top:none; }
+  .lang-in-bar, .book-in-bar{ display:none; }
+  .lang-in-menu{
+    display:flex;
+    gap:6px;
+    padding: 14px 24px;
+    border-top:1px solid var(--rule);
+  }
+  .main-nav .lang a{
+    padding:4px 8px;
+    border:1px solid var(--rule);
+    border-radius:2px;
+  }
+  .main-nav .lang a[aria-current="page"]{ border-color:var(--coral); }
+  .main-nav .book-in-menu{
+    display:block;
+    margin: 4px 24px 8px;
+    padding: 14px 18px;
+    text-align:center;
+    opacity:1;
+    border:1px solid var(--coral);
+  }
   body.nav-open .main-nav{ display:flex; }
   .nav-toggle{ display:flex; }
-  .topbar-actions{ gap:10px; }
-  .topbar .book-btn{ padding:9px 13px; font-size:11px; }
 
   .hero{ grid-template-columns: 1fr; padding: 48px 20px 56px; gap: 48px; }
   .hero h1 em{ font-size:0.56em; }

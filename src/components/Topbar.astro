@@ -23,6 +23,12 @@ const { nav } = content;
 const onHome = Astro.url.pathname === localePath[locale];
 const section = (hash: string) => (onHome ? hash : `${localePath[locale]}${hash}`);
 
+const langLinks = locales.map((l) => ({
+  locale: l,
+  href: langHrefs?.[l] ?? localePath[l],
+  current: l === locale,
+}));
+
 const sections = [
   { href: section('#about'), label: nav.about },
   { href: section('#services'), label: nav.services },
@@ -51,23 +57,39 @@ const sections = [
   </a>
   <nav class="main-nav" aria-label={nav.mainNavAria}>
     {sections.map((s) => <a href={s.href}>{s.label}</a>)}
-  </nav>
-  <div class="topbar-actions">
-    <nav class="lang" aria-label={nav.langAria}>
+    <!-- Mobile only: switcher and CTA move in here so the bar itself stays narrow. -->
+    <nav class="lang lang-in-menu" aria-label={nav.langAria}>
       {
-        locales.map((l) => (
+        langLinks.map((l) => (
           <a
-            href={langHrefs?.[l] ?? localePath[l]}
-            lang={l}
-            hreflang={l === locale ? undefined : l}
-            aria-current={l === locale ? 'page' : undefined}
+            href={l.href}
+            lang={l.locale}
+            hreflang={l.current ? undefined : l.locale}
+            aria-current={l.current ? 'page' : undefined}
           >
-            {l.toUpperCase()}
+            {l.locale.toUpperCase()}
           </a>
         ))
       }
     </nav>
-    <a class="book-btn coral" href={section('#contact')}>{nav.bookCta}</a>
+    <a class="book-btn coral book-in-menu" href={section('#contact')}>{nav.bookCta}</a>
+  </nav>
+  <div class="topbar-actions">
+    <nav class="lang lang-in-bar" aria-label={nav.langAria}>
+      {
+        langLinks.map((l) => (
+          <a
+            href={l.href}
+            lang={l.locale}
+            hreflang={l.current ? undefined : l.locale}
+            aria-current={l.current ? 'page' : undefined}
+          >
+            {l.locale.toUpperCase()}
+          </a>
+        ))
+      }
+    </nav>
+    <a class="book-btn coral book-in-bar" href={section('#contact')}>{nav.bookCta}</a>
     <button class="nav-toggle" aria-label={nav.menuAria} aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
