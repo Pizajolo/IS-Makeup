@@ -1,6 +1,24 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+/**
+ * Treats an empty string as "not set".
+ *
+ * Sveltia writes `field: ''` for an optional field the author left blank, and
+ * '' is not the same as absent. It breaks in three different ways:
+ *
+ *   - `updated: ''` fails date coercion and takes the whole build down.
+ *   - `translationKey: ''` is worse because it doesn't fail: '' is not nullish,
+ *     so the `?? slug` fallback never fires and every post with a blank key
+ *     gets grouped as a translation of every other one — wrong hreflang and a
+ *     language switcher pointing at unrelated posts.
+ *   - `location: ''` is harmless but emits a pointless empty value.
+ *
+ * Normalising before validation fixes all three at once.
+ */
+const blankAsUnset = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess((value) => (value === '' || value === null ? undefined : value), schema);
+
 // One file per locale under src/content/blog/{en,pt,es}/, so the entry id is
 // always "<locale>/<slug>" and the slug itself can be localised for search.
 //
@@ -15,7 +33,7 @@ const blog = defineCollection({
       title: z.string(),
       description: z.string(),
       date: z.coerce.date(),
-      updated: z.coerce.date().optional(),
+      updated: blankAsUnset(z.coerce.date().optional()),
 
       // The card grid, the OG tag and the RSS enclosure all need a guaranteed
       // image, which is why this one stays in frontmatter rather than the body.
@@ -51,12 +69,12 @@ const blog = defineCollection({
       // Ties the same post together across locales for hreflang and the
       // language switcher. Falls back to the slug when absent, so a post that
       // only exists in one language needs no ceremony.
-      translationKey: z.string().optional(),
+      translationKey: blankAsUnset(z.string().optional()),
 
       // Locations are content, not routes. A post written for a place carries
       // that place here and gets contentLocation in its schema; there is no
       // separate location page template to keep in sync.
-      location: z.string().optional(),
+      location: blankAsUnset(z.string().optional()),
     }),
 });
 
