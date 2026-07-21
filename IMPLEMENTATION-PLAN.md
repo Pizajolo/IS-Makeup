@@ -13,7 +13,7 @@ Nothing else starts until the current work is safe in git.
 - [x] Commit the current site — `styles.css`, `script.js`, `es/`, `pt/`, `sitemap.xml`, `robots.txt` were untracked and `index.html` was modified (commit `3286e8a`)
 - [x] Add `.gitignore` for macOS cruft and Astro build output
 - [x] Decide on `tweaks-panel.jsx` (currently deleted in working tree) — confirm it's intentionally gone
-- [ ] **Decide where media lives** — `assets/` is untracked, so Cloudflare Pages currently has no images to deploy (see Open questions)
+- [x] **Decide where media lives** — resolved: optimized images tracked in `src/assets/` (720 KB); video stays untracked pending shorter replacements
 
 ---
 
@@ -38,10 +38,24 @@ Collapse three near-identical HTML files into one templated site. No blog yet.
 
 ## Phase 2 — Media cleanup
 
-- [ ] Add `poster` images and `preload="none"` to decorative video
-- [ ] Confirm loops use `muted loop playsinline` and carry no player chrome
-- [ ] Switch images to Astro's `<Image>` for AVIF/WebP + responsive `srcset`
-- [ ] Audit `behindTheScenes.jpg` (562K) and `imageBride2.jpg` (339K) — oversized for their display size
+- [x] Switch images to Astro's `<Image>` with responsive `srcset` — homepage image payload 703 KB → 118 KB mobile / 286 KB desktop
+- [x] Commit optimized images to `src/assets/` (720 KB) so Cloudflare Pages has something to deploy
+- [x] Confirm loops use `muted loop playsinline` and carry no player chrome — verified, already correct
+- [ ] Add `poster` images and `preload="none"` to decorative video — **deferred**: these two are coupled (`preload="none"` without a poster shows a blank frame), and posters would go stale as soon as the videos are replaced
+- [ ] Replace reel1/2/4 with shorter clips, then generate posters and set `preload="none"`
+
+**Video findings (measured, not estimated):**
+
+| file | duration | size | notes |
+|---|---|---|---|
+| `reel1.mp4` | 105s | 28 MB | tap-to-play, not a loop |
+| `reel2.mp4` | 45s | 10 MB | tap-to-play |
+| `reel4.mp4` | 45s | 7.6 MB | tap-to-play |
+| `reel3.mp4` | 18.7s | 524 KB | the autoplay decorative loop — already fine |
+
+The `out_crf*.mp4` experiments tuned the wrong dial. All four carry AAC audio despite being `muted` in markup, but stripping it only saves ~1.6 MB — the cost is duration, not encoding. Best realistic self-host for `reel1` is 9 MB at 540×960 crf32, with visible quality loss. Anything longer than ~15s belongs on YouTube.
+
+`reel3` drops 524 KB → 300 KB from `-an` alone, with zero quality loss, whenever you want that.
 
 ---
 
@@ -49,14 +63,33 @@ Collapse three near-identical HTML files into one templated site. No blog yet.
 
 Location pages first — they're evergreen and need no publishing cadence. Blog layers on top.
 
-- [ ] Define the blog content collection schema: `title`, `description`, `date`, `heroImage`, `heroAlt`, `youtubeUrl`, `tags`, `draft`
+**Posts are documents, not forms.** Frontmatter carries metadata only; everything visual lives in the markdown body, so Inés can put subtitles, images, tables, links and videos wherever she wants, as many times as she wants. A fixed field list would cap her at one hero image and one video in one position — that's the thing to avoid.
+
+### Collection schema
+
+- [ ] Define the blog collection with the Astro 5 `glob()` loader, one file per locale (`src/content/blog/{en,pt,es}/`)
+- [ ] Keep frontmatter to metadata only: `title`, `description`, `date`, `heroImage`, `heroAlt`, `tags`, `draft`
 - [ ] Make `heroAlt` a **required** field — enforced validation, since alt text is the thing everyone skips
+- [ ] Keep `heroImage` in frontmatter (the card grid and OG tags need a guaranteed image), but drop `youtubeUrl` — video moves into the body
+
+### Body rendering
+
+- [ ] Use plain `.md`, **not** `.mdx` — a JSX tag in a post is something the CMS rich-text editor can mangle, and Inés would eventually see angle brackets
+- [ ] Confirm GFM tables render out of the box (Astro default) — tables need no extra work
+- [ ] Confirm relative images in markdown are optimized by Sharp automatically, giving AVIF/WebP + `srcset` inside post bodies
+- [ ] Write a remark plugin: a bare YouTube URL alone on its own line becomes a lazy `youtube-nocookie` embed (`rel=0`) with `VideoObject` schema — she pastes a link and presses enter, no syntax to learn
+- [ ] Accept that the embed only renders on the built page, not in the CMS editor, where it stays a plain link — demo this once in Phase 7 rather than engineering around it
+- [ ] Add heading anchors and wrap wide tables in an `overflow-x` container so long posts survive mobile
+- [ ] Style the rendered body with a single `.prose` wrapper in `styles.css` — one place governs every post
+- [ ] Optional, only if wanted: `remark-directive` for `:::note` / `:::tip` callouts
+
+### Templates and plumbing
+
 - [ ] Build the post template with `BlogPosting` schema (author, datePublished, image, inLanguage)
 - [ ] Build the blog index with pagination
 - [ ] Build the location page template
 - [ ] Write location pages matching the `areaServed` already in the schema: Sintra, Cascais, Comporta, Algarve, Porto
 - [ ] Add internal links from posts and location pages back to services and contact
-- [ ] Add a YouTube embed component — `youtube-nocookie.com`, `rel=0`, lazy-loaded, with `VideoObject` schema
 - [ ] Add RSS via `@astrojs/rss`
 - [ ] Add blog and location pages to the generated sitemap
 - [ ] Integrate the blog into site navigation across all three languages
@@ -70,10 +103,11 @@ Location pages first — they're evergreen and need no publishing cadence. Blog 
 - [ ] Add `/admin` with the Sveltia config
 - [ ] Configure i18n so EN/PT/ES fields appear side by side in one editor
 - [ ] Enable editorial workflow (draft → review → publish) so half-finished posts can be saved
-- [ ] Configure the rich text editor — Inés should never see raw markdown
-- [ ] Set up live preview against the real post template
+- [ ] Configure the rich text editor over the single markdown **body** field — Inés should never see raw markdown, and she should never be boxed into a fixed field list either
+- [ ] Verify the WYSIWYG covers headings, bold/italic, links, lists, tables and drag-drop images without dropping to source view
+- [ ] Set up live preview against the real post template — this is where a pasted YouTube link shows up as an actual embed
 - [ ] Configure media: drag-drop image upload with a size cap, committed to a defined `assets/` path
-- [ ] **Video is a YouTube URL field, not a file upload** — this is the guardrail against permanent git bloat
+- [ ] **Video is a pasted YouTube URL, never a file upload** — this is the guardrail against permanent git bloat
 - [ ] Grant Inés repo access at the minimum level that works
 - [ ] Test the full flow end to end as a non-admin user
 
