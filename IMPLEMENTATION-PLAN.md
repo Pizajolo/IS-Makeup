@@ -125,4 +125,4 @@ Drafts only. Inés reviews before anything publishes — her Portuguese beats an
 - Is `tweaks-panel.jsx` intentionally deleted?
 - Does the schema's placeholder phone number (`+351900000000`) need replacing before launch? Marked with a TODO in `src/data/site.ts`.
 - Restyle during the Astro port, or strictly port-then-restyle? — resolved: ported first, `styles.css` untouched.
-- **The old hand-written schema drifted from the visible FAQ.** Three EN questions and several answers differed between the JSON-LD and the page text (e.g. schema asked "How far in advance should I book my wedding makeup artist?" while the page asked "How far in advance should I book?"). Google requires FAQPage answers to match on-page content, so the port now generates schema from the visible FAQ. The old schema wording was more keyword-rich — worth considering whether to move that phrasing into the visible questions instead.
+- ~~The old hand-written schema drifted from the visible FAQ.~~ Resolved: schema is now generated from the visible FAQ, and the keyword-rich phrasing the old JSON-LD carried was moved onto the page (EN only — PT never drifted, ES differed only in punctuation).
