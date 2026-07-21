@@ -8,7 +8,7 @@ heroImage: https://img.magnific.com/free-photo/elegant-wedding-couple_1157-18557
 heroAlt: Test image only
 tags: []
 location: ''
-draft: true
+draft: false
 ---
 
 I'm Inés Santiago — a bridal makeup artist based in Lisbon, born in Guadalajara, Mexico. I create soft, luminous wedding looks that hold from the first look to the last dance — for brides marrying in Portugal, planning a destination wedding, or celebrating back home in Mexico.

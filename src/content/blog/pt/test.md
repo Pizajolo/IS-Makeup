@@ -1,4 +1,5 @@
 ---
+translationKey: test
 title: Test
 description: Test post only, so all good!
 date: 2026-07-21
@@ -6,8 +7,8 @@ updated: 2026-07-21
 heroImage: https://img.magnific.com/free-photo/elegant-wedding-couple_1157-18557.jpg?semt=ais_hybrid&w=740&q=80
 heroAlt: Test image only
 tags: []
-draft: true
-translationKey: test
+location: ''
+draft: false
 ---
 
 Sou a Inés Santiago — maquilhadora de noivas sediada em Lisboa, nascida em Guadalajara, no México. Crio looks de casamento suaves e luminosos que aguentam desde o first look até à última dança — para noivas que se casam em Portugal, que estão a planear um casamento de destino, ou que celebram de volta a casa no México.

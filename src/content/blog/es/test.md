@@ -1,4 +1,5 @@
 ---
+translationKey: test
 title: Test
 description: Solo prueba de post, ¡así que todo bien!
 date: 2026-07-21
@@ -6,8 +7,8 @@ updated: 2026-07-21
 heroImage: https://img.magnific.com/free-photo/elegant-wedding-couple_1157-18557.jpg?semt=ais_hybrid&w=740&q=80
 heroAlt: Solo imagen de prueba
 tags: []
-draft: true
-translationKey: test
+location: ''
+draft: false
 ---
 
 Soy Inés Santiago — maquillista de novias radicada en Lisboa, nacida en Guadalajara, México. Creo looks de novia suaves y luminosos que aguantan desde el first look hasta el último baile — para novias que se casan en Portugal, que planean una boda de destino o que festejan de vuelta en casa en México.
