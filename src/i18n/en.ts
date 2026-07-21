@@ -133,27 +133,22 @@ const en = {
     images: [
       {
         cls: 'p1',
-        src: '/assets/bride.jpg',
         alt: 'Bridal makeup portrait — natural, glowing wedding look by I.S Makeup, Lisbon',
       },
       {
         cls: 'p2',
-        src: '/assets/eyes.jpg',
         alt: 'Close-up of soft bridal eye makeup with lashes, by Lisbon makeup artist Inés Santiago',
       },
       {
         cls: 'p3',
-        src: '/assets/imageBrideLips.jpg',
         alt: 'Detail of long-wear bridal lip makeup for a wedding in Portugal',
       },
       {
         cls: 'p4',
-        src: '/assets/wedding.jpg',
         alt: 'Wedding ceremony in Portugal — bride wearing makeup by I.S Makeup',
       },
       {
         cls: 'p5',
-        src: '/assets/behindTheScenes.jpg',
         alt: 'Behind the scenes — bridal makeup application on the wedding morning',
       },
     ],

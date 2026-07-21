@@ -1,5 +1,7 @@
 ---
+import { getImage } from 'astro:assets';
 import { site, localePath, locales, ogLocale, fontsHref, type Locale } from '../data/site';
+import { heroImage } from '../assets/images';
 import type { Content } from '../i18n/en';
 import Schema from '../components/Schema.astro';
 import '../styles/global.css';
@@ -12,7 +14,16 @@ interface Props {
 const { locale, content } = Astro.props;
 
 const canonical = new URL(localePath[locale], site.url).href;
-const ogImage = new URL(site.ogImage, site.url).href;
+
+// Social crawlers need a real, absolute URL and many don't decode AVIF, so the
+// share image is generated as JPEG rather than reusing the page's <Image> output.
+const ogAsset = await getImage({
+  src: heroImage,
+  width: site.ogImageWidth,
+  height: site.ogImageHeight,
+  format: 'jpeg',
+});
+const ogImage = new URL(ogAsset.src, site.url).href;
 
 // og:locale:alternate lists the other two locales, never the current one.
 const alternateOgLocales = locales.filter((l) => l !== locale);
@@ -67,7 +78,13 @@ const alternateOgLocales = locales.filter((l) => l !== locale);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href={fontsHref} rel="stylesheet" />
-    <link rel="preload" as="image" href={site.ogImage} fetchpriority="high" />
+    {/*
+      No <link rel="preload"> for the hero. It now ships a responsive srcset, so
+      a fixed-width preload would usually mismatch whichever candidate the
+      browser picks and download the image twice. The hero <Image> carries
+      loading="eager" + fetchpriority="high" instead, which is the correct
+      signal for responsive LCP images.
+    */}
 
     <Schema locale={locale} content={content} />
   </head>

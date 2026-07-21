@@ -131,27 +131,22 @@ const pt: Content = {
     images: [
       {
         cls: 'p1',
-        src: '/assets/bride.jpg',
         alt: 'Retrato de noiva com maquilhagem natural e luminosa — I.S Makeup, Lisboa',
       },
       {
         cls: 'p2',
-        src: '/assets/eyes.jpg',
         alt: 'Pormenor de maquilhagem de olhos suave com pestanas, por maquilhadora em Lisboa',
       },
       {
         cls: 'p3',
-        src: '/assets/imageBrideLips.jpg',
         alt: 'Pormenor de batom de noiva de longa duração para casamento em Portugal',
       },
       {
         cls: 'p4',
-        src: '/assets/wedding.jpg',
         alt: 'Cerimónia de casamento em Portugal — noiva maquilhada pela I.S Makeup',
       },
       {
         cls: 'p5',
-        src: '/assets/behindTheScenes.jpg',
         alt: 'Bastidores — aplicação de maquilhagem de noiva na manhã do casamento',
       },
     ],

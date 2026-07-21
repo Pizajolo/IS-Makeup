@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import SectionHead from './SectionHead.astro';
+import { portfolioImages } from '../assets/images';
 import type { Content } from '../i18n/en';
 
 interface Props {
@@ -29,9 +31,16 @@ const reels = [
 
   <div class="portfolio-grid">
     {
-      portfolio.images.map((img) => (
+      portfolio.images.map((img, i) => (
         <figure class={img.cls}>
-          <img src={img.src} loading="lazy" decoding="async" alt={img.alt} />
+          <Image
+            src={portfolioImages[i]}
+            widths={[400, 800, 1200]}
+            sizes="(max-width: 700px) 100vw, 40vw"
+            loading="lazy"
+            decoding="async"
+            alt={img.alt}
+          />
         </figure>
       ))
     }

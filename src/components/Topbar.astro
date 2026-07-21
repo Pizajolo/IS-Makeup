@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { site, localePath, locales, type Locale } from '../data/site';
+import { logoImage } from '../assets/images';
 import type { Content } from '../i18n/en';
 
 interface Props {
@@ -23,7 +25,15 @@ const sections = [
 <header class="topbar">
   <a class="brand" href="#top" aria-label={nav.brandAria}>
     <div class="logo">
-      <img src={site.logo} alt={nav.logoAlt} width="746" height="746" />
+      <!-- Rendered at 38px; densities cover retina without shipping the 746px source. -->
+      <Image
+        src={logoImage}
+        width={38}
+        height={38}
+        densities={[1, 2, 3]}
+        loading="eager"
+        alt={nav.logoAlt}
+      />
     </div>
     <div class="name">{site.brandName}</div>
   </a>

@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import SectionHead from './SectionHead.astro';
+import { aboutImage } from '../assets/images';
 import type { Content } from '../i18n/en';
 
 interface Props {
@@ -20,10 +22,10 @@ const { about } = content;
 
   <div class="about">
     <div class="about-photo">
-      <img
-        src="/assets/imageBride2.jpg"
-        width="1440"
-        height="1920"
+      <Image
+        src={aboutImage}
+        widths={[480, 960, 1440]}
+        sizes="(max-width: 900px) 100vw, 45vw"
         loading="lazy"
         decoding="async"
         alt={about.photoAlt}

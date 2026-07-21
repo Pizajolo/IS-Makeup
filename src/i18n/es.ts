@@ -134,27 +134,22 @@ const es: Content = {
     images: [
       {
         cls: 'p1',
-        src: '/assets/bride.jpg',
         alt: 'Retrato de novia con maquillaje natural y luminoso — I.S Makeup, Lisboa',
       },
       {
         cls: 'p2',
-        src: '/assets/eyes.jpg',
         alt: 'Detalle de maquillaje de ojos suave con pestañas, por maquillista de novias',
       },
       {
         cls: 'p3',
-        src: '/assets/imageBrideLips.jpg',
         alt: 'Detalle de labios de novia de larga duración para boda en Portugal',
       },
       {
         cls: 'p4',
-        src: '/assets/wedding.jpg',
         alt: 'Ceremonia de boda en Portugal — novia maquillada por I.S Makeup',
       },
       {
         cls: 'p5',
-        src: '/assets/behindTheScenes.jpg',
         alt: 'Detrás de cámaras — aplicación de maquillaje de novia la mañana de la boda',
       },
     ],

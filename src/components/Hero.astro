@@ -1,5 +1,6 @@
 ---
-import { site } from '../data/site';
+import { Image } from 'astro:assets';
+import { heroImage } from '../assets/images';
 import type { Content } from '../i18n/en';
 
 interface Props {
@@ -31,10 +32,12 @@ const { hero } = content;
     </div>
   </div>
   <div class="hero-photo">
-    <img
-      src={site.ogImage}
-      width="1080"
-      height="1440"
+    <!-- LCP element: eager + high priority, never lazy. -->
+    <Image
+      src={heroImage}
+      widths={[540, 1080, 1620]}
+      sizes="(max-width: 900px) 100vw, 45vw"
+      loading="eager"
       fetchpriority="high"
       alt={hero.photoAlt}
     />
