@@ -1,29 +1,41 @@
 ---
 import { Image } from 'astro:assets';
-import { site, localePath, locales, type Locale } from '../data/site';
+import { site, localePath, journalPath, locales, type Locale } from '../data/site';
 import { logoImage } from '../assets/images';
 import type { Content } from '../i18n/en';
 
 interface Props {
   locale: Locale;
   content: Content;
+  /**
+   * Where each language switch should land. Journal posts pass their own
+   * translations so the switcher stays on the article; anything omitted falls
+   * back to that locale's homepage.
+   */
+  langHrefs?: Partial<Record<Locale, string>>;
 }
 
-const { locale, content } = Astro.props;
+const { locale, content, langHrefs } = Astro.props;
 const { nav } = content;
 
+// Section links are in-page anchors on the homepage and absolute everywhere
+// else, so the same topbar works from a journal post without dead links.
+const onHome = Astro.url.pathname === localePath[locale];
+const section = (hash: string) => (onHome ? hash : `${localePath[locale]}${hash}`);
+
 const sections = [
-  { href: '#about', label: nav.about },
-  { href: '#services', label: nav.services },
-  { href: '#portfolio', label: nav.portfolio },
-  { href: '#process', label: nav.process },
-  { href: '#faq', label: nav.faq },
-  { href: '#contact', label: nav.contact },
+  { href: section('#about'), label: nav.about },
+  { href: section('#services'), label: nav.services },
+  { href: section('#portfolio'), label: nav.portfolio },
+  { href: section('#process'), label: nav.process },
+  { href: journalPath[locale], label: nav.journal },
+  { href: section('#faq'), label: nav.faq },
+  { href: section('#contact'), label: nav.contact },
 ];
 ---
 
 <header class="topbar">
-  <a class="brand" href="#top" aria-label={nav.brandAria}>
+  <a class="brand" href={onHome ? '#top' : localePath[locale]} aria-label={nav.brandAria}>
     <div class="logo">
       <!-- Rendered at 38px; densities cover retina without shipping the 746px source. -->
       <Image
@@ -45,7 +57,7 @@ const sections = [
       {
         locales.map((l) => (
           <a
-            href={localePath[l]}
+            href={langHrefs?.[l] ?? localePath[l]}
             lang={l}
             hreflang={l === locale ? undefined : l}
             aria-current={l === locale ? 'page' : undefined}
@@ -55,7 +67,7 @@ const sections = [
         ))
       }
     </nav>
-    <a class="book-btn coral" href="#contact">{nav.bookCta}</a>
+    <a class="book-btn coral" href={section('#contact')}>{nav.bookCta}</a>
     <button class="nav-toggle" aria-label={nav.menuAria} aria-expanded="false">
       <span></span><span></span><span></span>
     </button>

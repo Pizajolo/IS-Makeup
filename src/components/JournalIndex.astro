@@ -1,0 +1,119 @@
+---
+import type { Page } from 'astro';
+import Layout from '../layouts/Layout.astro';
+import Topbar from './Topbar.astro';
+import Footer from './Footer.astro';
+import SectionHead from './SectionHead.astro';
+import PostCard from './PostCard.astro';
+import { journalPath, postPath, type Post } from '../data/journal';
+import { absUrl, blogNode, breadcrumbNode } from '../data/schema';
+import { localePath, locales, type Locale } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  locale: Locale;
+  content: Content;
+  page: Page<Post>;
+}
+
+const { locale, content, page } = Astro.props;
+const { journal } = content;
+
+const indexUrl = absUrl(journalPath[locale]);
+
+// Every locale has a journal index, so hreflang here is unconditional — unlike
+// a post, which only lists the locales it has actually been translated into.
+const alternates = Object.fromEntries(locales.map((l) => [l, journalPath[l]])) as Record<
+  Locale,
+  string
+>;
+
+const schemaNodes = [
+  blogNode(content, indexUrl, page.data.map((post) => absUrl(postPath(post)))),
+  breadcrumbNode(absUrl(page.url.current), [
+    { name: journal.breadcrumbHome, url: absUrl(localePath[locale]) },
+    { name: journal.title, url: indexUrl },
+  ]),
+];
+
+const pageLabel = journal.pageOf
+  .replace('{current}', String(page.currentPage))
+  .replace('{total}', String(page.lastPage));
+
+// Page 2 onwards gets its own title so the three pages aren't near-duplicates
+// competing with each other in search.
+const title =
+  page.currentPage === 1 ? journal.metaTitle : `${journal.metaTitle} — ${pageLabel}`;
+---
+
+<Layout
+  locale={locale}
+  content={content}
+  path={page.url.current}
+  alternates={alternates}
+  title={title}
+  description={journal.description}
+  ogTitle={journal.title}
+  ogDescription={journal.description}
+  twitterTitle={journal.title}
+  twitterDescription={journal.description}
+  schemaNodes={schemaNodes}
+>
+  <a class="skip-link" href="#main">{content.nav.skipLink}</a>
+
+  <Topbar locale={locale} content={content} />
+
+  <main id="main">
+    <section class="journal-index" aria-labelledby="journal-title">
+      <SectionHead
+        label={journal.indexLabel}
+        heading={journal.indexHeading}
+        headingId="journal-title"
+        aside={journal.indexAside}
+      />
+
+      {
+        page.data.length === 0 ? (
+          <p class="journal-empty">{journal.empty}</p>
+        ) : (
+          <div class="post-grid">
+            {page.data.map((post, index) => (
+              <PostCard
+                post={post}
+                locale={locale}
+                content={content}
+                eager={index === 0 && page.currentPage === 1}
+              />
+            ))}
+          </div>
+        )
+      }
+
+      {
+        page.lastPage > 1 && (
+          <nav class="pagination" aria-label={journal.paginationAria}>
+            {page.url.prev ? (
+              <a class="pagination-link" href={page.url.prev} rel="prev">
+                ← {journal.newer}
+              </a>
+            ) : (
+              <span class="pagination-link is-disabled">← {journal.newer}</span>
+            )}
+
+            <span class="pagination-count">{pageLabel}</span>
+
+            {page.url.next ? (
+              <a class="pagination-link" href={page.url.next} rel="next">
+                {journal.older} →
+              </a>
+            ) : (
+              <span class="pagination-link is-disabled">{journal.older} →</span>
+            )}
+          </nav>
+        )
+      }
+    </section>
+  </main>
+
+  <Footer locale={locale} content={content} />
+</Layout>

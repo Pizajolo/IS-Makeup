@@ -51,6 +51,17 @@ export const localePath: Record<Locale, string> = {
   es: '/es/',
 };
 
+// Localised journal slugs. The keyword sits in the URL in the reader's own
+// language, which is the whole reason these differ per locale rather than
+// sharing one path with a prefix.
+export const journalPath: Record<Locale, string> = {
+  en: '/journal/',
+  pt: '/pt/diario/',
+  es: '/es/diario/',
+};
+
+export const rssPath = (locale: Locale): string => `${journalPath[locale]}rss.xml`;
+
 export const ogLocale: Record<Locale, string> = {
   en: 'en_US',
   pt: 'pt_PT',

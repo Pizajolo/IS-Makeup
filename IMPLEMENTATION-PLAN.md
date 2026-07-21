@@ -59,40 +59,53 @@ The `out_crf*.mp4` experiments tuned the wrong dial. All four carry AAC audio de
 
 ---
 
-## Phase 3 — Content architecture
-
-Location pages first — they're evergreen and need no publishing cadence. Blog layers on top.
+## Phase 3 — Content architecture ✅
 
 **Posts are documents, not forms.** Frontmatter carries metadata only; everything visual lives in the markdown body, so Inés can put subtitles, images, tables, links and videos wherever she wants, as many times as she wants. A fixed field list would cap her at one hero image and one video in one position — that's the thing to avoid.
 
+**Decisions taken during implementation** — these supersede what this section originally planned:
+
+- **Localised slugs.** `/journal/`, `/pt/diario/`, `/es/diario/` — the keyword sits in the URL in the reader's own language. Costs the automatic hreflang grouping in `@astrojs/sitemap`, which only links pages sharing a path; the on-page `<link rel="alternate">` tags carry it instead, and those are the signal Google actually reads.
+- **No location page template.** Locations aren't fixed and the journal isn't about them — it's dynamic tips. A post written for a place carries an optional `location` field and emits `contentLocation` in its schema. Same local-SEO intent, no parallel template to keep in sync.
+- **Journal in the topbar** as a seventh item, plus a latest-posts section on the homepage. Section anchors go absolute off the homepage so one topbar works everywhere. Homepage sections renumbered: Journal 05, FAQ 06, Let's talk 07.
+
 ### Collection schema
 
-- [ ] Define the blog collection with the Astro 5 `glob()` loader, one file per locale (`src/content/blog/{en,pt,es}/`)
-- [ ] Keep frontmatter to metadata only: `title`, `description`, `date`, `heroImage`, `heroAlt`, `tags`, `draft`
-- [ ] Make `heroAlt` a **required** field — enforced validation, since alt text is the thing everyone skips
-- [ ] Keep `heroImage` in frontmatter (the card grid and OG tags need a guaranteed image), but drop `youtubeUrl` — video moves into the body
+- [x] Define the blog collection with the Astro 5 `glob()` loader, one file per locale (`src/content/blog/{en,pt,es}/`)
+- [x] Keep frontmatter to metadata only: `title`, `description`, `date`, `heroImage`, `heroAlt`, `tags`, `draft` — plus `updated`, `translationKey` and `location`
+- [x] Make `heroAlt` a **required** field — enforced validation, since alt text is the thing everyone skips
+- [x] Keep `heroImage` in frontmatter (the card grid and OG tags need a guaranteed image), but drop `youtubeUrl` — video moves into the body
 
 ### Body rendering
 
-- [ ] Use plain `.md`, **not** `.mdx` — a JSX tag in a post is something the CMS rich-text editor can mangle, and Inés would eventually see angle brackets
-- [ ] Confirm GFM tables render out of the box (Astro default) — tables need no extra work
-- [ ] Confirm relative images in markdown are optimized by Sharp automatically, giving AVIF/WebP + `srcset` inside post bodies
-- [ ] Write a remark plugin: a bare YouTube URL alone on its own line becomes a lazy `youtube-nocookie` embed (`rel=0`) with `VideoObject` schema — she pastes a link and presses enter, no syntax to learn
-- [ ] Accept that the embed only renders on the built page, not in the CMS editor, where it stays a plain link — demo this once in Phase 7 rather than engineering around it
-- [ ] Add heading anchors and wrap wide tables in an `overflow-x` container so long posts survive mobile
-- [ ] Style the rendered body with a single `.prose` wrapper in `styles.css` — one place governs every post
-- [ ] Optional, only if wanted: `remark-directive` for `:::note` / `:::tip` callouts
+- [x] Use plain `.md`, **not** `.mdx`
+- [x] Confirm GFM tables render out of the box (Astro default)
+- [x] Confirm relative images in markdown are optimized by Sharp automatically — verified, WebP + `srcset` inside post bodies
+- [x] Write a remark plugin: a bare YouTube URL alone on its own line becomes a lazy `youtube-nocookie` embed (`rel=0`). The plugin only detects the videos; the post template builds the `VideoObject`, because Google requires `name`/`description`/`uploadDate` and only the post knows those
+- [x] Accept that the embed only renders on the built page, not in the CMS editor — demo once in Phase 7
+- [x] Add heading anchors and wrap wide tables in an `overflow-x` container
+- [x] Style the rendered body with a single `.prose` wrapper — a three-column grid holds text at ~66ch while photos, tables and embeds run wider
+- [x] `remark-directive` for `:::note` / `:::tip` / `:::warning` callouts — labels are author-typed only (`:::tip[Dica]`), never generated, so callouts need no per-locale strings
+- [x] Bonus: a lone markdown image becomes a `<figure>`, and `![alt](img.jpg "Caption")` renders a caption
 
 ### Templates and plumbing
 
-- [ ] Build the post template with `BlogPosting` schema (author, datePublished, image, inLanguage)
-- [ ] Build the blog index with pagination
-- [ ] Build the location page template
-- [ ] Write location pages matching the `areaServed` already in the schema: Sintra, Cascais, Comporta, Algarve, Porto
-- [ ] Add internal links from posts and location pages back to services and contact
-- [ ] Add RSS via `@astrojs/rss`
-- [ ] Add blog and location pages to the generated sitemap
-- [ ] Integrate the blog into site navigation across all three languages
+- [x] Build the post template with `BlogPosting` schema (author, datePublished, image, inLanguage) + `BreadcrumbList` + `VideoObject`
+- [x] Build the blog index with pagination (6 per page)
+- [x] ~~Build the location page template~~ — dropped, see decisions above
+- [x] ~~Write location pages for Sintra, Cascais, Comporta, Algarve, Porto~~ — dropped; location-targeted posts carry `location` instead
+- [x] Add internal links from posts back to services and contact — a closing CTA block on every post, plus prev/next
+- [x] Add RSS via `@astrojs/rss` — one feed per locale, discoverable from every page's `<head>`
+- [x] Add blog pages to the generated sitemap — all 12 pages present
+- [x] Integrate the blog into site navigation across all three languages — topbar, footer, homepage teaser
+- [x] Reading time and word count computed from the body by a remark plugin, never a frontmatter field Inés has to maintain
+
+**Verified:** `astro check` clean across 48 files; 12 pages build; the three homepages diffed against the pre-Phase-3 build with every change intentional and the JSON-LD byte-identical; post hreflang resolves to real translated URLs; rendered output inspected in a browser at desktop and mobile widths.
+
+**Left open:**
+
+- The seed posts embed a placeholder YouTube video (Blender's *Big Buck Bunny*, `aqz-KE-bpKQ`) purely to demonstrate the embed. **Replace with real footage before launch.**
+- `npm audit` reports pre-existing high-severity advisories in Astro 5.x, fixed in 7.x. Unrelated to Phase 3 — an Astro major upgrade is its own task.
 
 ---
 

@@ -24,6 +24,7 @@ const pt: Content = {
     services: 'Serviços',
     portfolio: 'Portfólio',
     process: 'Processo',
+    journal: 'Diário',
     faq: 'FAQ',
     contact: 'Contacto',
     bookCta: 'Marcar data',
@@ -186,8 +187,46 @@ const pt: Content = {
     who: 'Mariana &amp; Tomás',
     whoDetail: '— Quinta do Torneiro, Sintra · 2025',
   },
+  journal: {
+    title: 'Diário',
+    description:
+      'Notas sobre maquilhagem de noiva por Inés Santiago — como se constrói uma maquilhagem que dura, o que levar à prova e o que esperar na manhã do casamento.',
+    metaTitle: 'Diário de Maquilhagem de Noiva — Dicas e Notas | I.S Makeup, Lisboa',
+
+    label: '05 — Diário',
+    heading: 'Notas da <em>cadeira</em>.',
+    aside: 'Notas práticas sobre maquilhagem de noiva — o que dura, o que pedir e o que esperar no dia.',
+    viewAll: 'Todos os artigos',
+    readMore: 'Ler',
+
+    indexLabel: 'Diário',
+    indexHeading: 'Notas da <em>cadeira</em>.',
+    indexAside:
+      'Escrita prática sobre maquilhagem de noiva — duração, provas, horários e as pequenas decisões que tornam a manhã calma.',
+
+    empty: 'O primeiro artigo está a caminho.',
+    readingTime: 'min de leitura',
+    updatedLabel: 'Atualizado',
+    tagsLabel: 'Etiquetas',
+    breadcrumbHome: 'Início',
+    backToJournal: 'Todos os artigos',
+
+    paginationAria: 'Paginação',
+    newer: 'Mais recentes',
+    older: 'Mais antigos',
+    pageOf: 'Página {current} de {total}',
+
+    prevPost: 'Anterior',
+    nextPost: 'Seguinte',
+
+    ctaHeading: 'A planear a maquilhagem do seu casamento?',
+    ctaBody:
+      'Veja o que inclui uma marcação de noiva, ou envie-me a sua data e local e respondo em 48 horas.',
+    ctaServices: 'Ver serviços',
+    ctaContact: 'Marcar data',
+  },
   faq: {
-    label: '05 — Perguntas Frequentes',
+    label: '06 — Perguntas Frequentes',
     heading: 'Perguntas, <em>respondidas</em>.',
     aside:
       'Tudo o que as noivas costumam perguntar antes de reservar maquilhagem de casamento em Lisboa — e mais além.',
@@ -219,7 +258,7 @@ const pt: Content = {
     ],
   },
   cta: {
-    label: '06 — Vamos falar',
+    label: '07 — Vamos falar',
     heading: 'Fale-me do seu<br/><em>grande dia</em>.',
     body: 'As datas de pico em Portugal reservam-se com 9–12 meses de antecedência — os fins de semana da primavera e de setembro vão primeiro. Envie a sua data e o local e respondo em 48 horas com disponibilidade e um orçamento à medida. Tarifas para dias de semana e época baixa disponíveis. Aceito um número reduzido de casamentos por ano — vamos ver se o seu é um deles.',
     emailKey: 'Email',

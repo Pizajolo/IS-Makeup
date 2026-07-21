@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import { formatDate, isoDate, postMeta, postPath, type Post } from '../data/journal';
+import type { Locale } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  post: Post;
+  locale: Locale;
+  content: Content;
+  /** The first card above the fold on the journal index skips lazy loading. */
+  eager?: boolean;
+}
+
+const { post, locale, content, eager = false } = Astro.props;
+const { readingTime } = await postMeta(post);
+---
+
+<article class="post-card">
+  <a class="post-card-link" href={postPath(post)}>
+    <div class="post-card-media">
+      <Image
+        src={post.data.heroImage}
+        alt={post.data.heroAlt}
+        widths={[320, 480, 760]}
+        sizes="(max-width: 640px) 86vw, (max-width: 1120px) 44vw, 30vw"
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    </div>
+    <div class="post-card-body">
+      <p class="post-card-meta">
+        <time datetime={isoDate(post.data.date)}>{formatDate(post.data.date, locale)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{readingTime} {content.journal.readingTime}</span>
+      </p>
+      <h3 class="post-card-title">{post.data.title}</h3>
+      <p class="post-card-desc">{post.data.description}</p>
+      <span class="post-card-more">{content.journal.readMore}</span>
+    </div>
+  </a>
+</article>

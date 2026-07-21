@@ -1,0 +1,198 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Topbar from './Topbar.astro';
+import Footer from './Footer.astro';
+import {
+  formatDate,
+  isoDate,
+  journalPath,
+  neighbours,
+  postPath,
+  type Post,
+} from '../data/journal';
+import { absUrl, blogPostingNode, breadcrumbNode, videoNode } from '../data/schema';
+import { localePath, type Locale } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  locale: Locale;
+  content: Content;
+  post: Post;
+  /** All published posts in this locale, newest first — used for prev/next. */
+  siblings: Post[];
+  /** Paths of this post in other locales; drives hreflang and the switcher. */
+  translations: Partial<Record<Locale, string>>;
+}
+
+const { locale, content, post, siblings, translations } = Astro.props;
+const { journal } = content;
+
+const { Content: Body, remarkPluginFrontmatter } = await render(post);
+const readingTime = (remarkPluginFrontmatter.readingTime as number) ?? 1;
+const words = (remarkPluginFrontmatter.words as number) ?? 0;
+const youtubeIds = (remarkPluginFrontmatter.youtubeIds as string[]) ?? [];
+
+const path = postPath(post);
+const pageUrl = absUrl(path);
+const indexUrl = absUrl(journalPath[locale]);
+const published = isoDate(post.data.date);
+const modified = post.data.updated ? isoDate(post.data.updated) : published;
+
+// Social crawlers want landscape; the site's own imagery is portrait, so the
+// share crop is generated separately rather than reusing the hero as-is.
+const ogAsset = await getImage({
+  src: post.data.heroImage,
+  width: 1200,
+  height: 630,
+  format: 'jpeg',
+});
+
+const { newer, older } = neighbours(siblings, post);
+
+const schemaNodes = [
+  blogPostingNode({
+    content,
+    pageUrl,
+    blogUrl: indexUrl,
+    title: post.data.title,
+    description: post.data.description,
+    imageUrl: absUrl(ogAsset.src),
+    datePublished: published,
+    dateModified: modified,
+    tags: post.data.tags,
+    location: post.data.location,
+    wordCount: words,
+  }),
+  breadcrumbNode(pageUrl, [
+    { name: journal.breadcrumbHome, url: absUrl(localePath[locale]) },
+    { name: journal.title, url: indexUrl },
+    { name: post.data.title, url: pageUrl },
+  ]),
+  ...youtubeIds.map((videoId, index) =>
+    videoNode({
+      videoId,
+      name: post.data.title,
+      description: post.data.description,
+      uploadDate: published,
+      index,
+      total: youtubeIds.length,
+    }),
+  ),
+];
+
+// A language the post hasn't been translated into lands on that locale's
+// journal index rather than a 404.
+const langHrefs = Object.fromEntries(
+  (['en', 'pt', 'es'] as Locale[]).map((l) => [l, translations[l] ?? journalPath[l]]),
+) as Record<Locale, string>;
+---
+
+<Layout
+  locale={locale}
+  content={content}
+  path={path}
+  alternates={translations}
+  title={`${post.data.title} | ${content.journal.title} — I.S Makeup`}
+  description={post.data.description}
+  ogTitle={post.data.title}
+  ogDescription={post.data.description}
+  twitterTitle={post.data.title}
+  twitterDescription={post.data.description}
+  ogType="article"
+  ogImage={post.data.heroImage}
+  ogImageWidth={1200}
+  ogImageHeight={630}
+  publishedTime={published}
+  modifiedTime={modified}
+  schemaNodes={schemaNodes}
+>
+  <a class="skip-link" href="#main">{content.nav.skipLink}</a>
+
+  <Topbar locale={locale} content={content} langHrefs={langHrefs} />
+
+  <main id="main">
+    <article class="post">
+      <header class="post-head">
+        <a class="post-back" href={journalPath[locale]}>← {journal.backToJournal}</a>
+
+        <p class="post-meta">
+          <time datetime={published}>{formatDate(post.data.date, locale)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{readingTime} {journal.readingTime}</span>
+          {
+            post.data.updated && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>
+                  {journal.updatedLabel} <time datetime={modified}>{formatDate(post.data.updated, locale)}</time>
+                </span>
+              </>
+            )
+          }
+        </p>
+
+        <h1>{post.data.title}</h1>
+        <p class="post-lede">{post.data.description}</p>
+
+        {
+          post.data.tags.length > 0 && (
+            <ul class="post-tags" aria-label={journal.tagsLabel}>
+              {post.data.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          )
+        }
+      </header>
+
+      <figure class="post-hero">
+        <Image
+          src={post.data.heroImage}
+          alt={post.data.heroAlt}
+          widths={[480, 760, 1100, 1440]}
+          sizes="(max-width: 980px) 100vw, 900px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
+
+      <div class="prose">
+        <Body />
+      </div>
+
+      <aside class="post-cta">
+        <h2>{journal.ctaHeading}</h2>
+        <p>{journal.ctaBody}</p>
+        <div class="post-cta-actions">
+          <a class="book-btn" href={`${localePath[locale]}#services`}>{journal.ctaServices}</a>
+          <a class="book-btn coral" href={`${localePath[locale]}#contact`}>{journal.ctaContact}</a>
+        </div>
+      </aside>
+
+      {
+        (newer || older) && (
+          <nav class="post-nav" aria-label={journal.paginationAria}>
+            {older ? (
+              <a class="post-nav-link" href={postPath(older)} rel="prev">
+                <span class="post-nav-label">← {journal.prevPost}</span>
+                <span class="post-nav-title">{older.data.title}</span>
+              </a>
+            ) : (
+              <span />
+            )}
+            {newer && (
+              <a class="post-nav-link is-next" href={postPath(newer)} rel="next">
+                <span class="post-nav-label">{journal.nextPost} →</span>
+                <span class="post-nav-title">{newer.data.title}</span>
+              </a>
+            )}
+          </nav>
+        )
+      }
+    </article>
+  </main>
+
+  <Footer locale={locale} content={content} />
+</Layout>

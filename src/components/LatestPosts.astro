@@ -1,0 +1,47 @@
+---
+import SectionHead from './SectionHead.astro';
+import PostCard from './PostCard.astro';
+import { getPosts, journalPath } from '../data/journal';
+import type { Locale } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  locale: Locale;
+  content: Content;
+}
+
+const { locale, content } = Astro.props;
+const { journal } = content;
+
+const posts = (await getPosts(locale)).slice(0, 3);
+---
+
+{
+  posts.length > 0 && (
+    <section id="journal" aria-labelledby="journal-teaser-title">
+      <SectionHead
+        label={journal.label}
+        heading={journal.heading}
+        headingId="journal-teaser-title"
+        aside={journal.aside}
+      />
+
+      {/*
+        Three across on desktop; a scroll-snapped rail on narrow screens, so a
+        phone shows one card at a time without three tall cards pushing the FAQ
+        far down the page.
+      */}
+      <div class="post-grid post-rail">
+        {posts.map((post) => (
+          <PostCard post={post} locale={locale} content={content} />
+        ))}
+      </div>
+
+      <p class="journal-more">
+        <a class="book-btn ghost" href={journalPath[locale]}>
+          {journal.viewAll}
+        </a>
+      </p>
+    </section>
+  )
+}

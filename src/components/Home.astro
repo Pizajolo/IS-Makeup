@@ -8,10 +8,12 @@ import Services from './Services.astro';
 import Portfolio from './Portfolio.astro';
 import Process from './Process.astro';
 import Testimonial from './Testimonial.astro';
+import LatestPosts from './LatestPosts.astro';
 import Faq from './Faq.astro';
 import Contact from './Contact.astro';
 import Footer from './Footer.astro';
-import type { Locale } from '../data/site';
+import { absUrl, faqNode } from '../data/schema';
+import { localePath, type Locale } from '../data/site';
 import type { Content } from '../i18n/en';
 
 interface Props {
@@ -20,9 +22,12 @@ interface Props {
 }
 
 const { locale, content } = Astro.props;
+
+// The FAQPage entity is generated from the visible FAQ, so the two cannot drift.
+const schemaNodes = [faqNode(content, absUrl(localePath[locale]))];
 ---
 
-<Layout locale={locale} content={content}>
+<Layout locale={locale} content={content} schemaNodes={schemaNodes}>
   <a class="skip-link" href="#main">{content.nav.skipLink}</a>
 
   <Topbar locale={locale} content={content} />
@@ -35,6 +40,7 @@ const { locale, content } = Astro.props;
     <Portfolio content={content} />
     <Process content={content} />
     <Testimonial content={content} />
+    <LatestPosts locale={locale} content={content} />
     <Faq content={content} />
     <Contact content={content} />
   </main>

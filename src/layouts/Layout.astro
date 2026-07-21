@@ -1,6 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
-import { site, localePath, locales, ogLocale, fontsHref, type Locale } from '../data/site';
+import { site, localePath, locales, ogLocale, fontsHref, rssPath, type Locale } from '../data/site';
+import { absUrl } from '../data/schema';
 import { heroImage } from '../assets/images';
 import type { Content } from '../i18n/en';
 import Schema from '../components/Schema.astro';
@@ -9,21 +10,73 @@ import '../styles/global.css';
 interface Props {
   locale: Locale;
   content: Content;
+
+  /** Path of this page. Defaults to the locale's homepage. */
+  path?: string;
+  /**
+   * hreflang targets, keyed by locale. Defaults to each locale's homepage.
+   * A journal post passes only the locales it has actually been translated
+   * into, so hreflang never points at a page that doesn't exist.
+   */
+  alternates?: Partial<Record<Locale, string>>;
+
+  title?: string;
+  description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+
+  ogType?: 'website' | 'article';
+  ogImage?: ImageMetadata;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+
+  /** Emitted for og:type="article". */
+  publishedTime?: string;
+  modifiedTime?: string;
+
+  /** Page-specific JSON-LD entities, appended to the shared business + person. */
+  schemaNodes?: Record<string, unknown>[];
 }
 
-const { locale, content } = Astro.props;
+const {
+  locale,
+  content,
+  path = localePath[locale],
+  alternates,
+  title = content.meta.title,
+  description = content.meta.description,
+  ogTitle = content.meta.ogTitle,
+  ogDescription = content.meta.ogDescription,
+  twitterTitle = content.meta.twitterTitle,
+  twitterDescription = content.meta.twitterDescription,
+  ogType = 'website',
+  ogImage = heroImage,
+  ogImageWidth = site.ogImageWidth,
+  ogImageHeight = site.ogImageHeight,
+  publishedTime,
+  modifiedTime,
+  schemaNodes = [],
+} = Astro.props;
 
-const canonical = new URL(localePath[locale], site.url).href;
+const canonical = absUrl(path);
+
+const hreflang = alternates ?? Object.fromEntries(locales.map((l) => [l, localePath[l]]));
+const hreflangEntries = locales
+  .filter((l): l is Locale => Boolean(hreflang[l]))
+  .map((l) => [l, absUrl(hreflang[l]!)] as const);
+const xDefault = hreflang.en ? absUrl(hreflang.en) : canonical;
 
 // Social crawlers need a real, absolute URL and many don't decode AVIF, so the
 // share image is generated as JPEG rather than reusing the page's <Image> output.
 const ogAsset = await getImage({
-  src: heroImage,
-  width: site.ogImageWidth,
-  height: site.ogImageHeight,
+  src: ogImage,
+  width: ogImageWidth,
+  height: ogImageHeight,
   format: 'jpeg',
 });
-const ogImage = new URL(ogAsset.src, site.url).href;
+const ogImageUrl = absUrl(ogAsset.src);
 
 // og:locale:alternate lists the other two locales, never the current one.
 const alternateOgLocales = locales.filter((l) => l !== locale);
@@ -35,45 +88,54 @@ const alternateOgLocales = locales.filter((l) => l !== locale);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{content.meta.title}</title>
-    <meta name="description" content={content.meta.description} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <meta name="author" content={site.author} />
     <link rel="canonical" href={canonical} />
 
     {
-      locales.map((l) => (
-        <link rel="alternate" hreflang={l} href={new URL(localePath[l], site.url).href} />
+      hreflangEntries.map(([l, href]) => (
+        <link rel="alternate" hreflang={l} href={href} />
       ))
     }
-    <link rel="alternate" hreflang="x-default" href={new URL(localePath.en, site.url).href} />
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
 
     <meta name="geo.region" content={site.geo.region} />
     <meta name="geo.placename" content={site.geo.placename} />
     <meta name="geo.position" content={`${site.geo.lat};${site.geo.lng}`} />
     <meta name="ICBM" content={`${site.geo.lat}, ${site.geo.lng}`} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.businessName} />
-    <meta property="og:title" content={content.meta.ogTitle} />
-    <meta property="og:description" content={content.meta.ogDescription} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content={String(site.ogImageWidth)} />
-    <meta property="og:image:height" content={String(site.ogImageHeight)} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content={String(ogImageWidth)} />
+    <meta property="og:image:height" content={String(ogImageHeight)} />
     <meta property="og:locale" content={ogLocale[locale]} />
     {
       alternateOgLocales.map((l) => (
         <meta property="og:locale:alternate" content={ogLocale[l]} />
       ))
     }
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={content.meta.twitterTitle} />
-    <meta name="twitter:description" content={content.meta.twitterDescription} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:title" content={twitterTitle} />
+    <meta name="twitter:description" content={twitterDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <meta name="theme-color" content={site.themeColor} />
     <link rel="icon" href={site.logo} />
     <link rel="apple-touch-icon" href={site.logo} />
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${site.brandName} — ${content.journal.title}`}
+      href={absUrl(rssPath(locale))}
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -86,7 +148,7 @@ const alternateOgLocales = locales.filter((l) => l !== locale);
       signal for responsive LCP images.
     */}
 
-    <Schema locale={locale} content={content} />
+    <Schema locale={locale} content={content} pageUrl={canonical} nodes={schemaNodes} />
   </head>
   <body>
     <slot />

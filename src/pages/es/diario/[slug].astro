@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from 'astro';
+import JournalPost from '../../../components/JournalPost.astro';
+import { getPosts, getTranslations, postSlug } from '../../../data/journal';
+import es from '../../../i18n/es';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPosts('es');
+  return Promise.all(
+    posts.map(async (post) => ({
+      params: { slug: postSlug(post) },
+      props: { post, siblings: posts, translations: await getTranslations(post) },
+    })),
+  );
+}) satisfies GetStaticPaths;
+
+const { post, siblings, translations } = Astro.props;
+---
+
+<JournalPost
+  locale="es"
+  content={es}
+  post={post}
+  siblings={siblings}
+  translations={translations}
+/>

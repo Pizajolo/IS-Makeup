@@ -26,6 +26,7 @@ const en = {
     services: 'Services',
     portfolio: 'Portfolio',
     process: 'Process',
+    journal: 'Journal',
     faq: 'FAQ',
     contact: 'Contact',
     bookCta: 'Check your date',
@@ -188,8 +189,50 @@ const en = {
     who: 'Mariana &amp; Tomás',
     whoDetail: '— Quinta do Torneiro, Sintra · 2025',
   },
+  // Journal. `label` and `heading` render on the homepage teaser; `indexLabel`
+  // and `indexHeading` on the journal index itself, which is a page in its own
+  // right rather than a section of the one-pager.
+  journal: {
+    title: 'Journal',
+    description:
+      'Bridal makeup notes from Inés Santiago — how wedding makeup is built to last, what to bring to a trial, and what to expect on the morning itself.',
+    metaTitle: 'Bridal Makeup Journal — Tips & Notes | I.S Makeup, Lisbon',
+
+    label: '05 — Journal',
+    heading: 'Notes from <em>the chair</em>.',
+    aside: 'Practical bridal notes — what lasts, what to ask for, and what to expect on the day.',
+    viewAll: 'All posts',
+    readMore: 'Read',
+
+    indexLabel: 'Journal',
+    indexHeading: 'Notes from <em>the chair</em>.',
+    indexAside:
+      'Practical writing on bridal makeup — longevity, trials, timings and the small decisions that make the morning calm.',
+
+    empty: 'The first post is on its way.',
+    readingTime: 'min read',
+    updatedLabel: 'Updated',
+    tagsLabel: 'Tagged',
+    breadcrumbHome: 'Home',
+    backToJournal: 'All posts',
+
+    paginationAria: 'Pagination',
+    newer: 'Newer',
+    older: 'Older',
+    pageOf: 'Page {current} of {total}',
+
+    prevPost: 'Previous',
+    nextPost: 'Next',
+
+    // Closing block on every post — the internal links back into the site.
+    ctaHeading: 'Planning your wedding makeup?',
+    ctaBody:
+      'See what a bridal booking includes, or send me your date and venue and I’ll come back to you within 48 hours.',
+    ctaServices: 'View services',
+    ctaContact: 'Check your date',
+  },
   faq: {
-    label: '05 — FAQ',
+    label: '06 — FAQ',
     heading: 'Questions, <em>answered</em>.',
     aside:
       'Everything brides usually ask before booking wedding makeup in Lisbon — and further afield.',
@@ -221,7 +264,7 @@ const en = {
     ],
   },
   cta: {
-    label: "06 — Let's talk",
+    label: "07 — Let's talk",
     heading: 'Tell me about<br/>your <em>day</em>.',
     body: "Peak wedding dates in Portugal book 9–12 months ahead — spring and September weekends go first. Send your date and venue and I'll reply within 48 hours with availability and a tailored quote. Weekday and off‑season rates available. I take a small number of weddings each year — let's see if yours is one of them.",
     emailKey: 'Email',

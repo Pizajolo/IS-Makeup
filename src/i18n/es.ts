@@ -27,6 +27,7 @@ const es: Content = {
     services: 'Servicios',
     portfolio: 'Portafolio',
     process: 'Proceso',
+    journal: 'Diario',
     faq: 'FAQ',
     contact: 'Contacto',
     bookCta: 'Aparta tu fecha',
@@ -189,8 +190,46 @@ const es: Content = {
     who: 'Mariana &amp; Tomás',
     whoDetail: '— Quinta do Torneiro, Sintra · 2025',
   },
+  journal: {
+    title: 'Diario',
+    description:
+      'Notas sobre maquillaje de novia por Inés Santiago — cómo se construye un maquillaje que dura, qué llevar a la prueba y qué esperar la mañana de la boda.',
+    metaTitle: 'Diario de Maquillaje de Novia — Consejos y Notas | I.S Makeup, Lisboa',
+
+    label: '05 — Diario',
+    heading: 'Notas desde <em>la silla</em>.',
+    aside: 'Notas prácticas sobre maquillaje de novia — qué dura, qué pedir y qué esperar el día de la boda.',
+    viewAll: 'Todas las notas',
+    readMore: 'Leer',
+
+    indexLabel: 'Diario',
+    indexHeading: 'Notas desde <em>la silla</em>.',
+    indexAside:
+      'Escritura práctica sobre maquillaje de novia — duración, pruebas, tiempos y las pequeñas decisiones que hacen que la mañana sea tranquila.',
+
+    empty: 'La primera nota viene en camino.',
+    readingTime: 'min de lectura',
+    updatedLabel: 'Actualizado',
+    tagsLabel: 'Etiquetas',
+    breadcrumbHome: 'Inicio',
+    backToJournal: 'Todas las notas',
+
+    paginationAria: 'Paginación',
+    newer: 'Más recientes',
+    older: 'Más antiguas',
+    pageOf: 'Página {current} de {total}',
+
+    prevPost: 'Anterior',
+    nextPost: 'Siguiente',
+
+    ctaHeading: '¿Estás planeando el maquillaje de tu boda?',
+    ctaBody:
+      'Mira qué incluye una reserva de novia, o mándame tu fecha y lugar y te respondo en 48 horas.',
+    ctaServices: 'Ver servicios',
+    ctaContact: 'Aparta tu fecha',
+  },
   faq: {
-    label: '05 — Preguntas Frecuentes',
+    label: '06 — Preguntas Frecuentes',
     heading: 'Preguntas, <em>respondidas</em>.',
     aside:
       'Todo lo que las novias suelen preguntar antes de apartar su fecha — en Portugal o en México.',
@@ -222,7 +261,7 @@ const es: Content = {
     ],
   },
   cta: {
-    label: '06 — Platiquemos',
+    label: '07 — Platiquemos',
     heading: 'Cuéntame de tu<br/><em>gran día</em>.',
     body: 'Las fechas pico en Portugal se apartan con 9–12 meses de anticipación — los fines de semana de primavera y septiembre se van primero. Envíame tu fecha y el lugar y te respondo en 48 horas con disponibilidad y una cotización a tu medida. Hay tarifas entre semana y de temporada baja. Tomo un número reducido de bodas al año — veamos si la tuya es una de ellas.',
     emailKey: 'Email',

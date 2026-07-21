@@ -1,5 +1,5 @@
 ---
-import { site, localePath, locales, languageName, type Locale } from '../data/site';
+import { site, localePath, journalPath, locales, languageName, type Locale } from '../data/site';
 import type { Content } from '../i18n/en';
 
 interface Props {
@@ -19,6 +19,7 @@ const otherLocales = locales.filter((l) => l !== locale);
   <div class="footer-inner">
     <div>{footer.copyright}</div>
     <div class="socials">
+      <a href={journalPath[locale]}>{content.journal.title}</a>
       <a href={site.instagram} target="_blank" rel="noopener noreferrer">
         {footer.instagram}
       </a>

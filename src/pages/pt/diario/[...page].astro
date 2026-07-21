@@ -1,0 +1,13 @@
+---
+import type { GetStaticPaths } from 'astro';
+import JournalIndex from '../../../components/JournalIndex.astro';
+import { getPosts, POSTS_PER_PAGE } from '../../../data/journal';
+import pt from '../../../i18n/pt';
+
+export const getStaticPaths = (async ({ paginate }) =>
+  paginate(await getPosts('pt'), { pageSize: POSTS_PER_PAGE })) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<JournalIndex locale="pt" content={pt} page={page} />
