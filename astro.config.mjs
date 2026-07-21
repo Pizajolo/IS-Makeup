@@ -8,6 +8,7 @@ import { remarkYouTube } from './src/plugins/remark-youtube.mjs';
 import { remarkReadingTime } from './src/plugins/remark-reading-time.mjs';
 import { rehypeTableWrap } from './src/plugins/rehype-table-wrap.mjs';
 import { rehypeMarkdownFigure } from './src/plugins/rehype-markdown-figure.mjs';
+import { rehypeGallery } from './src/plugins/rehype-gallery.mjs';
 
 // Site URLs must keep the shape the hand-written site already used:
 // English at /, Portuguese at /pt/, Spanish at /es/.
@@ -37,6 +38,8 @@ export default defineConfig({
       ],
       rehypeTableWrap,
       rehypeMarkdownFigure,
+      // Must follow rehypeMarkdownFigure — it groups the figures that one makes.
+      rehypeGallery,
     ],
   },
   integrations: [

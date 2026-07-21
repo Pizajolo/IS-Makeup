@@ -946,6 +946,7 @@ footer{
 }
 .prose > *{ grid-column: 2; }
 .prose > .post-figure,
+.prose > .post-gallery,
 .prose > .table-wrap,
 .prose > .video-embed{ grid-column: 1 / -1; }
 
@@ -1031,13 +1032,57 @@ footer{
 
 /* Figures, tables and embeds — the wide track of the prose grid. */
 .post-figure{ margin: 2.6em 0 0; }
-.post-figure img{ width:100%; }
+/*
+  Body photos are capped by height, not stretched to the column.
+
+  Every image on this site is portrait — 1.25 to 1.78 — and the figure track is
+  1040px wide, so `width:100%` rendered them 1300–1850px tall: taller than the
+  screen, and enough to push the surrounding paragraphs out of view.
+
+  `width:auto` also stops a small image being upscaled to fill the track, and
+  the min() keeps a very tall monitor from undoing the cap.
+*/
+.post-figure img{
+  width: auto;
+  max-width: 100%;
+  max-height: min(70vh, 720px);
+  margin-inline: auto;
+}
 .post-figure figcaption{
   margin-top: 12px;
   font-size: 13px;
   line-height:1.6;
   color: var(--ink-soft);
   text-align:center;
+}
+
+/*
+  Consecutive images, grouped by rehype-gallery. Column count is set per
+  gallery by the plugin — two or three across, 2×2 for four.
+
+  Inside a gallery the height cap is dropped and a shared aspect ratio takes
+  over, because a collage only reads as one if the tiles line up. 4/5 matches
+  the portrait ratio of most of the photography here, so the common case isn't
+  cropped at all.
+*/
+.post-gallery{
+  margin: 2.6em 0 0;
+  display:grid;
+  grid-template-columns: repeat(var(--gallery-columns, 2), 1fr);
+  gap: 10px;
+  align-items:start;
+}
+.post-gallery .post-figure{ margin: 0; }
+.post-gallery .post-figure img{
+  width:100%;
+  max-height:none;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+.post-gallery .post-figure figcaption{
+  margin-top: 8px;
+  font-size: 12px;
+  text-align:left;
 }
 
 .table-wrap{
@@ -1278,6 +1323,9 @@ footer{
   .prose blockquote{ font-size: 20px; padding-left: 20px; }
   /* Touch has no hover, so the anchors would otherwise never be reachable. */
   .heading-anchor{ opacity: 0.4; }
+
+  /* Three or four across gets too small to read on a phone; two always fits. */
+  .post-gallery{ grid-template-columns: repeat(2, 1fr); gap: 8px; }
 
   .post-cta{ padding: 32px 24px 36px; }
   .post-cta h2{ font-size: 26px; }
