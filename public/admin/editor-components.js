@@ -55,6 +55,23 @@ function parsePastedGrid(raw) {
   return rows.map((row) => [...row, ...Array(width - row.length).fill('')]);
 }
 
+/** An empty grid of the requested size, with the headings labelled so the
+ *  structure is visible and she can see where to type. */
+const blankGrid = (columns, rows) => {
+  const width = Math.min(Math.max(Number(columns) || 3, 1), 12);
+  const height = Math.min(Math.max(Number(rows) || 3, 1), 50);
+  return [
+    Array.from({ length: width }, (_, i) => `Heading ${i + 1}`),
+    // A single space rather than an empty string: some markdown renderers
+    // collapse a truly empty cell and the column count drifts.
+    ...Array.from({ length: height }, () => Array.from({ length: width }, () => ' ')),
+  ];
+};
+
+/** Paste wins when present; otherwise fall back to the chosen size. */
+const gridFrom = ({ data, columns, rows }) =>
+  parsePastedGrid(data) ?? blankGrid(columns, rows);
+
 const toMarkdownTable = (grid) => {
   const [header, ...body] = grid;
   const row = (cells) => `| ${cells.join(' | ')} |`;
@@ -79,13 +96,37 @@ function register() {
     label: 'Table',
     icon: 'table',
 
+    // Size first, paste second. The paste box was originally the only input,
+    // but pasting into it does nothing — the editor appears to swallow the
+    // event before the field sees it. Numbers need no clipboard, so choosing a
+    // size always works; the paste box stays as a shortcut for when it does.
     fields: [
       {
+        name: 'columns',
+        label: 'Columns',
+        widget: 'number',
+        value_type: 'int',
+        default: 3,
+        min: 2,
+        max: 8,
+      },
+      {
+        name: 'rows',
+        label: 'Rows',
+        widget: 'number',
+        value_type: 'int',
+        default: 3,
+        min: 1,
+        max: 30,
+        hint: 'Not counting the heading row.',
+      },
+      {
         name: 'data',
-        label: 'Paste from a spreadsheet',
+        label: 'Or paste from a spreadsheet',
         widget: 'text',
+        required: false,
         hint:
-          'Build the table in Google Sheets or Excel, select the cells, copy, and paste here. ' +
+          'Optional. If this has anything in it, it wins and the numbers above are ignored. ' +
           'The first row becomes the headings.',
       },
     ],
@@ -98,15 +139,8 @@ function register() {
     pattern: /(?!)/,
     fromBlock: () => ({}),
 
-    toBlock: ({ data }) => {
-      const grid = parsePastedGrid(data);
-      return grid ? toMarkdownTable(grid) : '';
-    },
-
-    toPreview: ({ data }) => {
-      const grid = parsePastedGrid(data);
-      return grid ? toHtmlTable(grid) : '';
-    },
+    toBlock: (values) => toMarkdownTable(gridFrom(values)),
+    toPreview: (values) => toHtmlTable(gridFrom(values)),
   });
 
   return true;
