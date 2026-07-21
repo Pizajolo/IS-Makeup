@@ -191,6 +191,11 @@ collections:
         # rich_text first, so that is what opens by default and Inés never sees
         # markdown. The raw mode stays available as an escape hatch for you.
         modes: [rich_text, raw]
+        # `table` is the custom component registered in editor-components.js —
+        # the two built-ins have to be listed alongside it, or naming any at all
+        # would drop them. If the Table button fails to appear, this list is the
+        # first thing to check.
+        editor_components: [image, code-block, table]
         hint: >-
           To add a video, paste the YouTube link on a line of its own and press
           enter. It stays a plain link here, and becomes a real embedded player
