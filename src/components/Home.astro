@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Topbar from './Topbar.astro';
+import Hero from './Hero.astro';
+import Marquee from './Marquee.astro';
+import About from './About.astro';
+import Services from './Services.astro';
+import Portfolio from './Portfolio.astro';
+import Process from './Process.astro';
+import Testimonial from './Testimonial.astro';
+import Faq from './Faq.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+import type { Locale } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  locale: Locale;
+  content: Content;
+}
+
+const { locale, content } = Astro.props;
+---
+
+<Layout locale={locale} content={content}>
+  <a class="skip-link" href="#main">{content.nav.skipLink}</a>
+
+  <Topbar locale={locale} content={content} />
+
+  <main id="main">
+    <Hero content={content} />
+    <Marquee content={content} />
+    <About content={content} />
+    <Services content={content} />
+    <Portfolio content={content} />
+    <Process content={content} />
+    <Testimonial content={content} />
+    <Faq content={content} />
+    <Contact content={content} />
+  </main>
+
+  <Footer locale={locale} content={content} />
+</Layout>

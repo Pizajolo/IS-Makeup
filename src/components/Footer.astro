@@ -1,0 +1,35 @@
+---
+import { site, localePath, locales, languageName, type Locale } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  locale: Locale;
+  content: Content;
+}
+
+const { locale, content } = Astro.props;
+const { footer } = content;
+
+// Footer links out to the other two languages, named in their own language.
+const otherLocales = locales.filter((l) => l !== locale);
+---
+
+<footer>
+  <p class="footer-tagline" set:html={footer.tagline} />
+  <div class="footer-inner">
+    <div>{footer.copyright}</div>
+    <div class="socials">
+      <a href={site.instagram} target="_blank" rel="noopener noreferrer">
+        {footer.instagram}
+      </a>
+      {
+        otherLocales.map((l) => (
+          <a href={localePath[l]} hreflang={l}>
+            {languageName[l]}
+          </a>
+        ))
+      }
+    </div>
+    <div>{footer.reach}</div>
+  </div>
+</footer>

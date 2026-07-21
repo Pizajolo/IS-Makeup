@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  heading: string;
+  headingId: string;
+  aside: string;
+}
+
+const { label, heading, headingId, aside } = Astro.props;
+---
+
+<div class="section-head">
+  <div>
+    <p class="label">{label}</p>
+    <h2 id={headingId} set:html={heading} />
+  </div>
+  <p class="aside">{aside}</p>
+</div>

@@ -12,7 +12,7 @@ Nothing else starts until the current work is safe in git.
 
 - [x] Commit the current site — `styles.css`, `script.js`, `es/`, `pt/`, `sitemap.xml`, `robots.txt` were untracked and `index.html` was modified (commit `3286e8a`)
 - [x] Add `.gitignore` for macOS cruft and Astro build output
-- [ ] Decide on `tweaks-panel.jsx` (currently deleted in working tree) — confirm it's intentionally gone
+- [x] Decide on `tweaks-panel.jsx` (currently deleted in working tree) — confirm it's intentionally gone
 - [ ] **Decide where media lives** — `assets/` is untracked, so Cloudflare Pages currently has no images to deploy (see Open questions)
 
 ---

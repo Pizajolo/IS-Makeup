@@ -1,0 +1,31 @@
+---
+import SectionHead from './SectionHead.astro';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  content: Content;
+}
+
+const { content } = Astro.props;
+const { faq } = content;
+---
+
+<section id="faq" aria-labelledby="faq-title">
+  <SectionHead
+    label={faq.label}
+    heading={faq.heading}
+    headingId="faq-title"
+    aside={faq.aside}
+  />
+
+  <div class="faq-list">
+    {
+      faq.items.map((item) => (
+        <details>
+          <summary>{item.q}</summary>
+          <div class="answer">{item.a}</div>
+        </details>
+      ))
+    }
+  </div>
+</section>

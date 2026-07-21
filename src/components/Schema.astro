@@ -1,0 +1,106 @@
+---
+import { site, localePath, locales, type Locale } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  locale: Locale;
+  content: Content;
+}
+
+const { locale, content } = Astro.props;
+
+const businessId = `${site.url}/#business`;
+const personId = `${site.url}/#ines`;
+const pageUrl = new URL(localePath[locale], site.url).href;
+
+// Copy in the locale files carries HTML entities and inline markup for
+// rendering. Structured data must be plain text, so strip both.
+const plain = (s: string) =>
+  s
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'BeautySalon',
+    '@id': businessId,
+    name: site.businessName,
+    description: content.schema.businessDescription,
+    url: site.url + '/',
+    image: new URL(site.ogImage, site.url).href,
+    logo: new URL(site.logo, site.url).href,
+    email: site.email,
+    telephone: site.phone,
+    priceRange: site.priceRange,
+    currenciesAccepted: site.currency,
+    address: {
+      '@type': 'PostalAddress',
+      ...site.address,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: site.geo.lat,
+      longitude: site.geo.lng,
+    },
+    sameAs: [site.instagram],
+    founder: { '@id': personId },
+    knowsLanguage: [...locales],
+    areaServed: content.schema.areaServed.map((a) => ({
+      '@type': a.type,
+      name: a.name,
+    })),
+    makesOffer: content.schema.offers.map((offer) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: offer.name,
+        description: offer.description,
+      },
+      ...(offer.price !== null && {
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          price: offer.price,
+          priceCurrency: site.currency,
+          valueAddedTaxIncluded: true,
+        },
+      }),
+    })),
+  },
+  {
+    '@type': 'Person',
+    '@id': personId,
+    name: site.author,
+    jobTitle: content.schema.jobTitle,
+    birthPlace: { '@type': 'Place', name: content.schema.birthPlace },
+    homeLocation: { '@type': 'Place', name: content.schema.homeLocation },
+    worksFor: { '@id': businessId },
+    sameAs: [site.instagram],
+  },
+  {
+    '@type': 'FAQPage',
+    // Locale-scoped so the three language versions declare distinct FAQ pages
+    // rather than three copies of one id.
+    '@id': `${pageUrl}#faq`,
+    inLanguage: content.htmlLang,
+    mainEntity: content.faq.items.map((item) => ({
+      '@type': 'Question',
+      name: plain(item.q),
+      acceptedAnswer: { '@type': 'Answer', text: plain(item.a) },
+    })),
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': graph,
+};
+---
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(jsonLd, null, 2)}
+/>

@@ -1,0 +1,18 @@
+---
+import type { Content } from '../i18n/en';
+
+interface Props {
+  content: Content;
+}
+
+const { content } = Astro.props;
+
+// The track is duplicated so the CSS scroll loops seamlessly.
+const track = [...content.marquee, ...content.marquee];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    {track.map((word) => <span>{word}</span>)}
+  </div>
+</div>

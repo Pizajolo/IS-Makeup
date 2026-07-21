@@ -1,0 +1,41 @@
+---
+import SectionHead from './SectionHead.astro';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  content: Content;
+}
+
+const { content } = Astro.props;
+const { about } = content;
+---
+
+<section id="about" aria-labelledby="about-title">
+  <SectionHead
+    label={about.label}
+    heading={about.heading}
+    headingId="about-title"
+    aside={about.aside}
+  />
+
+  <div class="about">
+    <div class="about-photo">
+      <img
+        src="/assets/imageBride2.jpg"
+        width="1440"
+        height="1920"
+        loading="lazy"
+        decoding="async"
+        alt={about.photoAlt}
+      />
+    </div>
+    <div class="about-text">
+      <p class="intro">{about.intro}</p>
+      {about.paragraphs.map((p) => <p>{p}</p>)}
+      <div class="signature">
+        {about.signatureName}
+        <small set:html={about.signatureRole} />
+      </div>
+    </div>
+  </div>
+</section>

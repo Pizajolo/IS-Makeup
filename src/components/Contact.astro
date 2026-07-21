@@ -1,0 +1,44 @@
+---
+import { site } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  content: Content;
+}
+
+const { content } = Astro.props;
+const { cta } = content;
+
+const rows = [
+  { key: cta.emailKey, val: site.email, href: `mailto:${site.email}`, external: false },
+  { key: cta.phoneKey, val: site.phoneDisplay, href: site.whatsapp, external: true },
+  { key: cta.instagramKey, val: site.instagramHandle, href: site.instagram, external: true },
+  { key: cta.studioKey, val: cta.studioValue, href: site.mapsUrl, external: true },
+];
+---
+
+<div class="cta" id="contact">
+  <div class="cta-inner">
+    <div>
+      <p class="label">{cta.label}</p>
+      <h2 set:html={cta.heading} />
+      <p>{cta.body}</p>
+    </div>
+    <div class="contact-list">
+      {
+        rows.map((row) => (
+          <a
+            class="contact-row"
+            href={row.href}
+            target={row.external ? '_blank' : undefined}
+            rel={row.external ? 'noopener noreferrer' : undefined}
+          >
+            <div class="key">{row.key}</div>
+            <div class="val">{row.val}</div>
+            <div class="arrow">↗</div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>

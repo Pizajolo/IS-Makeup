@@ -1,0 +1,20 @@
+---
+import type { Content } from '../i18n/en';
+
+interface Props {
+  content: Content;
+}
+
+const { content } = Astro.props;
+const { testimonial } = content;
+---
+
+<section class="testimonial" aria-label={testimonial.aria}>
+  <p class="stars" aria-hidden="true">✦ ✦ ✦ ✦ ✦</p>
+  <blockquote class="quote">
+    <span class="mark">&ldquo;</span>{testimonial.quote}<span class="mark">&rdquo;</span>
+  </blockquote>
+  <p class="who">
+    <strong set:html={testimonial.who} /> {testimonial.whoDetail}
+  </p>
+</section>

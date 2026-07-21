@@ -1,0 +1,53 @@
+---
+import { site, localePath, locales, type Locale } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  locale: Locale;
+  content: Content;
+}
+
+const { locale, content } = Astro.props;
+const { nav } = content;
+
+const sections = [
+  { href: '#about', label: nav.about },
+  { href: '#services', label: nav.services },
+  { href: '#portfolio', label: nav.portfolio },
+  { href: '#process', label: nav.process },
+  { href: '#faq', label: nav.faq },
+  { href: '#contact', label: nav.contact },
+];
+---
+
+<header class="topbar">
+  <a class="brand" href="#top" aria-label={nav.brandAria}>
+    <div class="logo">
+      <img src={site.logo} alt={nav.logoAlt} width="746" height="746" />
+    </div>
+    <div class="name">{site.brandName}</div>
+  </a>
+  <nav class="main-nav" aria-label={nav.mainNavAria}>
+    {sections.map((s) => <a href={s.href}>{s.label}</a>)}
+  </nav>
+  <div class="topbar-actions">
+    <nav class="lang" aria-label={nav.langAria}>
+      {
+        locales.map((l) => (
+          <a
+            href={localePath[l]}
+            lang={l}
+            hreflang={l === locale ? undefined : l}
+            aria-current={l === locale ? 'page' : undefined}
+          >
+            {l.toUpperCase()}
+          </a>
+        ))
+      }
+    </nav>
+    <a class="book-btn coral" href="#contact">{nav.bookCta}</a>
+    <button class="nav-toggle" aria-label={nav.menuAria} aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>

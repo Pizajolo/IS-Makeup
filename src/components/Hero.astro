@@ -1,0 +1,47 @@
+---
+import { site } from '../data/site';
+import type { Content } from '../i18n/en';
+
+interface Props {
+  content: Content;
+}
+
+const { content } = Astro.props;
+const { hero } = content;
+---
+
+<section class="hero" id="top">
+  <div>
+    <p class="eyebrow">{hero.eyebrow}</p>
+    <h1 set:html={hero.heading} />
+    <p class="lede">{hero.lede}</p>
+    <div class="hero-ctas">
+      <a class="book-btn coral" href="#contact">{hero.ctaPrimary}</a>
+      <a class="book-btn" href="#portfolio">{hero.ctaSecondary}</a>
+    </div>
+    <div class="meta">
+      {
+        hero.stats.map((stat) => (
+          <div>
+            <span class="num">{stat.num}</span>
+            <Fragment set:html={stat.label} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img
+      src={site.ogImage}
+      width="1080"
+      height="1440"
+      fetchpriority="high"
+      alt={hero.photoAlt}
+    />
+    <div class="stamp">
+      <b>{hero.stampTop}</b>
+      <span>{hero.stampMid}</span>
+      <b>{hero.stampBottom}</b>
+    </div>
+  </div>
+</section>
