@@ -195,3 +195,121 @@ collections:
           To add a video, paste the YouTube link on a line of its own and press
           enter. It stays a plain link here, and becomes a real embedded player
           on the published page.
+
+  # The two fixed homepage sections Inés can edit — FAQ and Services. Unlike the
+  # blog (documents), these are structured lists, so they are forms here. Each is
+  # one JSON file holding all three languages side by side (single_file i18n).
+  # The files already exist with every locale, so initial_locales does not apply.
+  #
+  # IMPORTANT: every field the JSON carries must be listed below. Sveltia writes
+  # back only the fields it knows about, so any field left out here would be
+  # silently dropped from the file the next time she saves.
+  - name: content
+    label: Site sections
+    description: The FAQ and Services blocks on the homepage.
+    i18n:
+      structure: single_file
+      locales: [en, pt, es]
+    files:
+      - name: faq
+        label: FAQ
+        file: src/data/faq.json
+        i18n: true
+        description: >-
+          Questions brides ask before booking. This is also what builds the FAQ
+          structured data that Google and AI assistants read, so keep the
+          answers factual and specific.
+        fields:
+          - name: label
+            label: Section eyebrow
+            widget: string
+            i18n: true
+            hint: The small label above the heading, e.g. "06 — FAQ".
+          - name: heading
+            label: Heading
+            widget: string
+            i18n: true
+            hint: Wrap a word in <em>…</em> to italicise it, e.g. Questions, <em>answered</em>.
+          - name: aside
+            label: Intro line
+            widget: text
+            i18n: true
+          - name: items
+            label: Questions
+            label_singular: Question
+            widget: list
+            i18n: true
+            summary: '{{fields.q}}'
+            fields:
+              - { name: q, label: Question, widget: string, i18n: true }
+              - name: a
+                label: Answer
+                widget: text
+                i18n: true
+                hint: >-
+                  Two or three sentences. Lead with the direct answer and keep
+                  the specifics — prices, place names — those are what search
+                  engines and AI assistants quote.
+      - name: services
+        label: Services
+        file: src/data/services.json
+        i18n: true
+        description: >-
+          The service cards and their prices. Each card's price is entered once
+          and reused for Google's structured data — so it can't fall out of sync.
+        fields:
+          - name: label
+            label: Section eyebrow
+            widget: string
+            i18n: true
+            hint: The small label above the heading, e.g. "02 — Services".
+          - name: heading
+            label: Heading
+            widget: string
+            i18n: true
+            hint: Wrap a word in <em>…</em> to italicise it.
+          - name: aside
+            label: Intro line
+            widget: text
+            i18n: true
+          - name: items
+            label: Services
+            label_singular: Service
+            widget: list
+            i18n: true
+            summary: '{{fields.title}}'
+            fields:
+              - name: num
+                label: Number label
+                widget: string
+                i18n: true
+                hint: 'e.g. "N° 01 — Signature".'
+              - name: title
+                label: Title
+                widget: string
+                i18n: true
+                hint: Wrap a word in <em>…</em> to italicise it, e.g. Bridal <em>Day-Of</em>.
+              - name: body
+                label: Description
+                widget: text
+                i18n: true
+              - name: price
+                label: Price shown on the card
+                widget: string
+                i18n: true
+                hint: 'Free text, e.g. "From €450 · Trial included" or "By quote".'
+              - name: amount
+                label: Price for search engines (€)
+                widget: number
+                value_type: int
+                required: false
+                i18n: true
+                hint: >-
+                  The starting price as a plain number, e.g. 450 — used for Google
+                  and AI assistants. Leave empty for "by quote" services. Keep it
+                  matching the price you wrote above.
+              - name: featured
+                label: Highlight this card
+                widget: boolean
+                default: false
+                i18n: true

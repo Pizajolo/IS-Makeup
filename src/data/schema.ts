@@ -50,17 +50,21 @@ export function businessNode(locale: Locale, content: Content, pageUrl: string):
       '@type': area.type,
       name: area.name,
     })),
-    makesOffer: content.schema.offers.map((offer) => ({
+    // Offers are derived from the visible service cards, so the price a bride
+    // reads and the price in structured data come from one source and cannot
+    // drift. name/description are the plain-text form of each card's title/body;
+    // `amount` is the machine price, null for by-quote services (no price node).
+    makesOffer: content.services.items.map((item) => ({
       '@type': 'Offer',
       itemOffered: {
         '@type': 'Service',
-        name: offer.name,
-        description: offer.description,
+        name: plain(item.title),
+        description: plain(item.body),
       },
-      ...(offer.price !== null && {
+      ...(item.amount != null && {
         priceSpecification: {
           '@type': 'PriceSpecification',
-          price: offer.price,
+          price: item.amount,
           priceCurrency: site.currency,
           valueAddedTaxIncluded: true,
         },

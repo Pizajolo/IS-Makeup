@@ -1,4 +1,5 @@
 import type { Content } from './en';
+import { faq, services } from './content-data';
 
 // Spanish is market-adapted rather than a literal translation: it leads with
 // Guadalajara, reorders the FAQ to put Mexico second, and swaps in local
@@ -77,56 +78,7 @@ const es: Content = {
     signatureName: 'Inés Santiago',
     signatureRole: 'Fundadora &amp; Maquillista · I.S Makeup · Lisboa',
   },
-  services: {
-    label: '02 — Servicios',
-    heading: 'Servicios de maquillaje <em>de novia</em>.',
-    aside:
-      'Toda reserva de novia incluye una consulta sin costo y una prueba de maquillaje. Los viajes por Portugal y al extranjero se cotizan por separado.',
-    items: [
-      {
-        num: 'N° 01 — Firma',
-        title: 'Novia <em>Día de la Boda</em>',
-        body: 'Una aplicación completa — preparación de piel, pestañas y un acabado de larga duración, a prueba de cámara, pensado para durar desde los preparativos de la mañana hasta el final de la fiesta. Incluye una prueba.',
-        price: 'Desde 450 € · Prueba incluida',
-        featured: true,
-      },
-      {
-        num: 'N° 02',
-        title: 'Mamás <em>&amp; Damas</em>',
-        body: 'Looks coordinados para mamás, hermanas y damas de honor — más suaves, más ligeros, pensados para complementar a la novia sin competir con ella.',
-        price: 'Desde 120 € / persona',
-        featured: false,
-      },
-      {
-        num: 'N° 03',
-        title: 'Bodas <em>de Destino</em>',
-        body: 'Servicio listo para viajar por todo Portugal — Sintra, Comporta, el Algarve — además de Europa y México. Acompañamiento de varios días, retoques en el lugar y una presencia discreta durante toda la celebración.',
-        price: 'Con cotización · Todo el mundo',
-        featured: false,
-      },
-      {
-        num: 'N° 04',
-        title: 'Editorial <em>&amp; Eventos</em>',
-        body: 'Campañas, lookbooks y eventos para marcas y revistas — un resultado limpio, listo para cámara, aprobado por fotógrafos.',
-        price: 'Desde 350 € / medio día',
-        featured: false,
-      },
-      {
-        num: 'N° 05',
-        title: 'Clases <em>Personales</em>',
-        body: 'Una sesión individual de dos horas en tu casa, con tus propios productos. Te quedas con una rutina diaria de cinco pasos que sí vas a usar.',
-        price: '180 € · 2 horas',
-        featured: false,
-      },
-      {
-        num: 'N° 06',
-        title: 'Ocasiones <em>Especiales</em>',
-        body: 'Galas, XV años, graduaciones, aniversarios — aplicaciones únicas para los días que merecen un poco más.',
-        price: 'Desde 140 €',
-        featured: false,
-      },
-    ],
-  },
+  services: services.es,
   portfolio: {
     label: '03 — Portafolio',
     heading: 'Novias <em>recientes</em>.',
@@ -228,38 +180,7 @@ const es: Content = {
     ctaServices: 'Ver servicios',
     ctaContact: 'Aparta tu fecha',
   },
-  faq: {
-    label: '06 — Preguntas Frecuentes',
-    heading: 'Preguntas, <em>respondidas</em>.',
-    aside:
-      'Todo lo que las novias suelen preguntar antes de apartar su fecha — en Portugal o en México.',
-    items: [
-      {
-        q: '¿Cuánto cuesta el maquillaje de novia?',
-        a: 'El maquillaje de novia para el día de la boda parte de 450 € e incluye una prueba completa, preparación de piel, pestañas y un acabado de larga duración. El maquillaje para mamás y damas parte de 120 € por persona. Los viajes fuera de Lisboa se cotizan por separado — sin costos escondidos.',
-      },
-      {
-        q: '¿Haces bodas en Guadalajara y el resto de México?',
-        a: 'Sí — Guadalajara es donde nací y donde aprendí a amar este oficio. Cada año aparto un pequeño número de fechas para bodas en Jalisco y el resto de México. Por el viaje que implica, conviene reservar estas fechas con bastante anticipación.',
-      },
-      {
-        q: '¿Trabajas bodas de destino en Portugal y Europa?',
-        a: 'Sí — Lisboa es mi base. Trabajo en todas las regiones de bodas de Portugal: Lisboa, Sintra, Cascais, Comporta y el Algarve, además de bodas de destino en otros países de Europa. Si sueñas con casarte en Portugal, estás en casa: conozco los venues, la luz y a los mejores proveedores.',
-      },
-      {
-        q: '¿Con cuánta anticipación debo reservar?',
-        a: 'Las reservas abren 12 meses antes, y las fechas pico — fines de semana de mayo a octubre en Portugal — suelen apartarse con 9 a 12 meses de anticipación. Entre semana y en temporada baja hay más flexibilidad, y las solicitudes de última hora siempre son bienvenidas: si estoy libre, soy tuya.',
-      },
-      {
-        q: '¿La prueba está incluida — y cómo funciona?',
-        a: 'Toda reserva de novia incluye una prueba: una sesión tranquila de dos horas, normalmente unas seis semanas antes de la boda, donde afinamos el look, probamos los productos en tu piel y fotografiamos el resultado con distintas luces — para que no haya sorpresas el gran día.',
-      },
-      {
-        q: '¿El maquillaje de verdad dura todo el día — y aguanta las lágrimas?',
-        a: 'Sí. Cada look se construye con productos de larga duración, a prueba de cámara, y técnicas de capas que aguantan desde los preparativos de la mañana hasta el first look, las lágrimas de la ceremonia y el último baile. Además recibes un pequeño kit de retoque para tener a la mano en la noche.',
-      },
-    ],
-  },
+  faq: faq.es,
   cta: {
     label: '07 — Platiquemos',
     heading: 'Cuéntame de tu<br/><em>gran día</em>.',
@@ -293,40 +214,6 @@ const es: Content = {
       { type: 'City', name: 'Guadalajara' },
       { type: 'AdministrativeArea', name: 'Jalisco' },
       { type: 'Country', name: 'México' },
-    ],
-    offers: [
-      {
-        name: 'Maquillaje de novia — día de la boda',
-        description:
-          'Aplicación completa con preparación de piel, pestañas y acabado de larga duración. Incluye una prueba.',
-        price: 450,
-      },
-      {
-        name: 'Maquillaje para mamás y damas',
-        description: 'Looks coordinados para mamás, hermanas y damas de honor.',
-        price: 120,
-      },
-      {
-        name: 'Bodas de destino',
-        description:
-          'Maquillaje de novia en todo Portugal, Europa y México, con acompañamiento de varios días y retoques en el lugar.',
-        price: null,
-      },
-      {
-        name: 'Editorial y eventos',
-        description: 'Maquillaje para campañas, lookbooks y eventos de marcas y revistas.',
-        price: 350,
-      },
-      {
-        name: 'Clases personales de automaquillaje',
-        description: 'Sesión individual de dos horas en tu casa, con tus propios productos.',
-        price: 180,
-      },
-      {
-        name: 'Ocasiones especiales',
-        description: 'Aplicaciones únicas para galas, XV años, graduaciones y aniversarios.',
-        price: 140,
-      },
     ],
   },
 };

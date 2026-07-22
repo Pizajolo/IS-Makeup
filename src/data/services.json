@@ -1,0 +1,167 @@
+{
+  "en": {
+    "label": "02 — Services",
+    "heading": "Wedding makeup <em>services</em>.",
+    "aside": "Every bridal booking includes a complimentary consultation and a trial session. Travel across Portugal and abroad quoted separately.",
+    "items": [
+      {
+        "num": "N° 01 — Signature",
+        "title": "Bridal <em>Day‑Of</em>",
+        "body": "A full bridal application — skin prep, lashes, and a long‑wear, camera‑proof finish built to last from morning preparations through the late reception. Includes one trial session.",
+        "price": "From €450 · Trial included",
+        "amount": 450,
+        "featured": true
+      },
+      {
+        "num": "N° 02",
+        "title": "Bridal <em>Party</em>",
+        "body": "Coordinated looks for mothers, sisters, and bridesmaids — softer, lighter, and tailored to complement the bride without competing.",
+        "price": "From €120 / person",
+        "amount": 120,
+        "featured": false
+      },
+      {
+        "num": "N° 03",
+        "title": "Destination <em>Weddings</em>",
+        "body": "Travel‑ready wedding makeup across Portugal — Sintra, Comporta, the Algarve — plus Europe and Mexico. Multi‑day support, on‑site touch‑ups, and a discreet presence throughout the celebration.",
+        "price": "By quote · Worldwide",
+        "amount": null,
+        "featured": false
+      },
+      {
+        "num": "N° 04",
+        "title": "Editorial <em>&amp; Events</em>",
+        "body": "Campaign, lookbook, and event work for brands and magazines — clean, camera‑ready, photographer‑approved.",
+        "price": "From €350 / half‑day",
+        "amount": 350,
+        "featured": false
+      },
+      {
+        "num": "N° 05",
+        "title": "Private <em>Lessons</em>",
+        "body": "A two‑hour one‑to‑one session in your own home, with your own products. You'll leave with a five‑step everyday routine you'll actually use.",
+        "price": "€180 · 2 hours",
+        "amount": 180,
+        "featured": false
+      },
+      {
+        "num": "N° 06",
+        "title": "Special <em>Occasions</em>",
+        "body": "Galas, christenings, anniversaries — single applications for the days that deserve a little more.",
+        "price": "From €140",
+        "amount": 140,
+        "featured": false
+      }
+    ]
+  },
+  "pt": {
+    "label": "02 — Serviços",
+    "heading": "Serviços de maquilhagem <em>de noiva</em>.",
+    "aside": "Todas as reservas de noiva incluem uma consulta gratuita e uma prova de maquilhagem. Deslocações em Portugal e no estrangeiro orçamentadas à parte.",
+    "items": [
+      {
+        "num": "N° 01 — Assinatura",
+        "title": "Noiva <em>Dia do Casamento</em>",
+        "body": "Aplicação completa — preparação de pele, pestanas e um acabamento de longa duração, à prova de câmara, pensado para durar dos preparativos da manhã até ao fim da festa. Inclui uma prova.",
+        "price": "Desde 450 € · Prova incluída",
+        "amount": 450,
+        "featured": true
+      },
+      {
+        "num": "N° 02",
+        "title": "Mães <em>&amp; Damas</em>",
+        "body": "Looks coordenados para mães, irmãs e damas de honor — mais suaves, mais leves, pensados para complementar a noiva sem competir com ela.",
+        "price": "Desde 120 € / pessoa",
+        "amount": 120,
+        "featured": false
+      },
+      {
+        "num": "N° 03",
+        "title": "Casamentos <em>de Destino</em>",
+        "body": "Serviço pronto a viajar por todo o Portugal — Sintra, Comporta, Algarve — e também pela Europa e pelo México. Acompanhamento de vários dias, retoques no local e uma presença discreta durante toda a celebração.",
+        "price": "Sob orçamento · Todo o mundo",
+        "amount": null,
+        "featured": false
+      },
+      {
+        "num": "N° 04",
+        "title": "Editorial <em>&amp; Eventos</em>",
+        "body": "Campanhas, lookbooks e eventos para marcas e revistas — um resultado limpo, pronto para a câmara, aprovado por fotógrafos.",
+        "price": "Desde 350 € / meio-dia",
+        "amount": 350,
+        "featured": false
+      },
+      {
+        "num": "N° 05",
+        "title": "Aulas <em>Privadas</em>",
+        "body": "Uma sessão individual de duas horas em sua casa, com os seus próprios produtos. Sai com uma rotina diária de cinco passos que vai mesmo usar.",
+        "price": "180 € · 2 horas",
+        "amount": 180,
+        "featured": false
+      },
+      {
+        "num": "N° 06",
+        "title": "Ocasiões <em>Especiais</em>",
+        "body": "Galas, batizados, aniversários — aplicações únicas para os dias que merecem um pouco mais.",
+        "price": "Desde 140 €",
+        "amount": 140,
+        "featured": false
+      }
+    ]
+  },
+  "es": {
+    "label": "02 — Servicios",
+    "heading": "Servicios de maquillaje <em>de novia</em>.",
+    "aside": "Toda reserva de novia incluye una consulta sin costo y una prueba de maquillaje. Los viajes por Portugal y al extranjero se cotizan por separado.",
+    "items": [
+      {
+        "num": "N° 01 — Firma",
+        "title": "Novia <em>Día de la Boda</em>",
+        "body": "Una aplicación completa — preparación de piel, pestañas y un acabado de larga duración, a prueba de cámara, pensado para durar desde los preparativos de la mañana hasta el final de la fiesta. Incluye una prueba.",
+        "price": "Desde 450 € · Prueba incluida",
+        "amount": 450,
+        "featured": true
+      },
+      {
+        "num": "N° 02",
+        "title": "Mamás <em>&amp; Damas</em>",
+        "body": "Looks coordinados para mamás, hermanas y damas de honor — más suaves, más ligeros, pensados para complementar a la novia sin competir con ella.",
+        "price": "Desde 120 € / persona",
+        "amount": 120,
+        "featured": false
+      },
+      {
+        "num": "N° 03",
+        "title": "Bodas <em>de Destino</em>",
+        "body": "Servicio listo para viajar por todo Portugal — Sintra, Comporta, el Algarve — además de Europa y México. Acompañamiento de varios días, retoques en el lugar y una presencia discreta durante toda la celebración.",
+        "price": "Con cotización · Todo el mundo",
+        "amount": null,
+        "featured": false
+      },
+      {
+        "num": "N° 04",
+        "title": "Editorial <em>&amp; Eventos</em>",
+        "body": "Campañas, lookbooks y eventos para marcas y revistas — un resultado limpio, listo para cámara, aprobado por fotógrafos.",
+        "price": "Desde 350 € / medio día",
+        "amount": 350,
+        "featured": false
+      },
+      {
+        "num": "N° 05",
+        "title": "Clases <em>Personales</em>",
+        "body": "Una sesión individual de dos horas en tu casa, con tus propios productos. Te quedas con una rutina diaria de cinco pasos que sí vas a usar.",
+        "price": "180 € · 2 horas",
+        "amount": 180,
+        "featured": false
+      },
+      {
+        "num": "N° 06",
+        "title": "Ocasiones <em>Especiales</em>",
+        "body": "Galas, XV años, graduaciones, aniversarios — aplicaciones únicas para los días que merecen un poco más.",
+        "price": "Desde 140 €",
+        "amount": 140,
+        "featured": false
+      }
+    ]
+  }
+}

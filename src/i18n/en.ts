@@ -2,6 +2,8 @@
 // object, so pt.ts and es.ts fail to compile if a key is missing or renamed.
 // Headings carry inline <em> markup and are rendered with set:html.
 
+import { faq, services } from './content-data';
+
 const en = {
   htmlLang: 'en',
   meta: {
@@ -76,56 +78,7 @@ const en = {
     signatureName: 'Inés Santiago',
     signatureRole: 'Founder &amp; Artist · I.S Makeup · Lisbon',
   },
-  services: {
-    label: '02 — Services',
-    heading: 'Wedding makeup <em>services</em>.',
-    aside:
-      'Every bridal booking includes a complimentary consultation and a trial session. Travel across Portugal and abroad quoted separately.',
-    items: [
-      {
-        num: 'N° 01 — Signature',
-        title: 'Bridal <em>Day‑Of</em>',
-        body: 'A full bridal application — skin prep, lashes, and a long‑wear, camera‑proof finish built to last from morning preparations through the late reception. Includes one trial session.',
-        price: 'From €450 · Trial included',
-        featured: true,
-      },
-      {
-        num: 'N° 02',
-        title: 'Bridal <em>Party</em>',
-        body: 'Coordinated looks for mothers, sisters, and bridesmaids — softer, lighter, and tailored to complement the bride without competing.',
-        price: 'From €120 / person',
-        featured: false,
-      },
-      {
-        num: 'N° 03',
-        title: 'Destination <em>Weddings</em>',
-        body: 'Travel‑ready wedding makeup across Portugal — Sintra, Comporta, the Algarve — plus Europe and Mexico. Multi‑day support, on‑site touch‑ups, and a discreet presence throughout the celebration.',
-        price: 'By quote · Worldwide',
-        featured: false,
-      },
-      {
-        num: 'N° 04',
-        title: 'Editorial <em>&amp; Events</em>',
-        body: 'Campaign, lookbook, and event work for brands and magazines — clean, camera‑ready, photographer‑approved.',
-        price: 'From €350 / half‑day',
-        featured: false,
-      },
-      {
-        num: 'N° 05',
-        title: 'Private <em>Lessons</em>',
-        body: "A two‑hour one‑to‑one session in your own home, with your own products. You'll leave with a five‑step everyday routine you'll actually use.",
-        price: '€180 · 2 hours',
-        featured: false,
-      },
-      {
-        num: 'N° 06',
-        title: 'Special <em>Occasions</em>',
-        body: 'Galas, christenings, anniversaries — single applications for the days that deserve a little more.',
-        price: 'From €140',
-        featured: false,
-      },
-    ],
-  },
+  services: services.en,
   portfolio: {
     label: '03 — Portfolio',
     heading: 'Recent <em>brides</em>.',
@@ -231,38 +184,7 @@ const en = {
     ctaServices: 'View services',
     ctaContact: 'Check your date',
   },
-  faq: {
-    label: '06 — FAQ',
-    heading: 'Questions, <em>answered</em>.',
-    aside:
-      'Everything brides usually ask before booking wedding makeup in Lisbon — and further afield.',
-    items: [
-      {
-        q: 'How much does bridal makeup cost in Lisbon?',
-        a: 'Bridal day‑of makeup starts at €450 and includes a full trial session, skin prep, lashes and a long‑wear finish. Bridal party makeup starts at €120 per person. Travel outside Lisbon is quoted separately with your proposal — no hidden extras.',
-      },
-      {
-        q: 'Do you travel to weddings outside Lisbon — Sintra, Cascais, Comporta or the Algarve?',
-        a: "Yes. I work across Portugal's wedding regions — Sintra, Cascais, Comporta, the Douro Valley and the Algarve — as well as destination weddings elsewhere in Europe. Travel and, where needed, accommodation are quoted transparently with your proposal.",
-      },
-      {
-        q: 'Do you take destination weddings in Mexico?',
-        a: 'I do — Guadalajara is where I was born and learned to love this craft. I take a small number of weddings in Jalisco and across Mexico each year. Because of the travel involved, Mexican dates are best reserved well in advance.',
-      },
-      {
-        q: 'How far in advance should I book my wedding makeup artist?',
-        a: "Bookings open 12 months ahead, and peak dates in Portugal — May to October weekends — usually go 9 to 12 months in advance. Weekday and off‑season dates are more flexible, and last‑minute enquiries are always welcome: if I'm free, I'm yours.",
-      },
-      {
-        q: 'Is a makeup trial included — and what happens at the trial?',
-        a: 'Every bridal day‑of booking includes one trial: a relaxed two‑hour session, usually about six weeks before the wedding, where we refine the look, test products on your skin, and photograph the result in different light so there are no surprises on the day.',
-      },
-      {
-        q: 'Will the makeup really last all day — and through tears?',
-        a: "Yes. Every look is built with long‑wear, camera‑proof products and layering techniques that hold from morning preparations through the first look, the ceremony tears, and the last dance. You'll also receive a small touch‑up kit to keep close in the evening.",
-      },
-    ],
-  },
+  faq: faq.en,
   cta: {
     label: "07 — Let's talk",
     heading: 'Tell me about<br/>your <em>day</em>.',
@@ -300,40 +222,6 @@ const en = {
       { type: 'City', name: 'Guadalajara' },
       { type: 'AdministrativeArea', name: 'Jalisco' },
       { type: 'Country', name: 'Mexico' },
-    ],
-    offers: [
-      {
-        name: 'Bridal day-of makeup',
-        description:
-          'Full bridal application with skin prep, lashes and long-wear finish. Includes one trial session.',
-        price: 450,
-      },
-      {
-        name: 'Bridal party makeup',
-        description: 'Coordinated looks for mothers, sisters and bridesmaids.',
-        price: 120,
-      },
-      {
-        name: 'Destination wedding makeup',
-        description:
-          'Travel-ready bridal makeup across Portugal, Europe and Mexico with multi-day support and on-site touch-ups.',
-        price: null as number | null,
-      },
-      {
-        name: 'Editorial and event makeup',
-        description: 'Campaign, lookbook and event makeup for brands and magazines.',
-        price: 350,
-      },
-      {
-        name: 'Private makeup lesson',
-        description: 'Two-hour one-to-one makeup lesson at home with your own products.',
-        price: 180,
-      },
-      {
-        name: 'Special occasion makeup',
-        description: 'Single applications for galas, christenings and anniversaries.',
-        price: 140,
-      },
     ],
   },
 };

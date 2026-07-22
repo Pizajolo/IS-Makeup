@@ -1,4 +1,5 @@
 import type { Content } from './en';
+import { faq, services } from './content-data';
 
 const pt: Content = {
   htmlLang: 'pt',
@@ -74,56 +75,7 @@ const pt: Content = {
     signatureName: 'Inés Santiago',
     signatureRole: 'Fundadora &amp; Maquilhadora · I.S Makeup · Lisboa',
   },
-  services: {
-    label: '02 — Serviços',
-    heading: 'Serviços de maquilhagem <em>de noiva</em>.',
-    aside:
-      'Todas as reservas de noiva incluem uma consulta gratuita e uma prova de maquilhagem. Deslocações em Portugal e no estrangeiro orçamentadas à parte.',
-    items: [
-      {
-        num: 'N° 01 — Assinatura',
-        title: 'Noiva <em>Dia do Casamento</em>',
-        body: 'Aplicação completa — preparação de pele, pestanas e um acabamento de longa duração, à prova de câmara, pensado para durar dos preparativos da manhã até ao fim da festa. Inclui uma prova.',
-        price: 'Desde 450 € · Prova incluída',
-        featured: true,
-      },
-      {
-        num: 'N° 02',
-        title: 'Mães <em>&amp; Damas</em>',
-        body: 'Looks coordenados para mães, irmãs e damas de honor — mais suaves, mais leves, pensados para complementar a noiva sem competir com ela.',
-        price: 'Desde 120 € / pessoa',
-        featured: false,
-      },
-      {
-        num: 'N° 03',
-        title: 'Casamentos <em>de Destino</em>',
-        body: 'Serviço pronto a viajar por todo o Portugal — Sintra, Comporta, Algarve — e também pela Europa e pelo México. Acompanhamento de vários dias, retoques no local e uma presença discreta durante toda a celebração.',
-        price: 'Sob orçamento · Todo o mundo',
-        featured: false,
-      },
-      {
-        num: 'N° 04',
-        title: 'Editorial <em>&amp; Eventos</em>',
-        body: 'Campanhas, lookbooks e eventos para marcas e revistas — um resultado limpo, pronto para a câmara, aprovado por fotógrafos.',
-        price: 'Desde 350 € / meio-dia',
-        featured: false,
-      },
-      {
-        num: 'N° 05',
-        title: 'Aulas <em>Privadas</em>',
-        body: 'Uma sessão individual de duas horas em sua casa, com os seus próprios produtos. Sai com uma rotina diária de cinco passos que vai mesmo usar.',
-        price: '180 € · 2 horas',
-        featured: false,
-      },
-      {
-        num: 'N° 06',
-        title: 'Ocasiões <em>Especiais</em>',
-        body: 'Galas, batizados, aniversários — aplicações únicas para os dias que merecem um pouco mais.',
-        price: 'Desde 140 €',
-        featured: false,
-      },
-    ],
-  },
+  services: services.pt,
   portfolio: {
     label: '03 — Portfólio',
     heading: 'Noivas <em>recentes</em>.',
@@ -225,38 +177,7 @@ const pt: Content = {
     ctaServices: 'Ver serviços',
     ctaContact: 'Marcar data',
   },
-  faq: {
-    label: '06 — Perguntas Frequentes',
-    heading: 'Perguntas, <em>respondidas</em>.',
-    aside:
-      'Tudo o que as noivas costumam perguntar antes de reservar maquilhagem de casamento em Lisboa — e mais além.',
-    items: [
-      {
-        q: 'Quanto custa a maquilhagem de noiva em Lisboa?',
-        a: 'A maquilhagem de noiva para o dia do casamento começa nos 450 € e inclui uma prova completa, preparação de pele, pestanas e um acabamento de longa duração. A maquilhagem para mães e damas de honor começa nos 120 € por pessoa. Deslocações fora de Lisboa são orçamentadas à parte — sem custos escondidos.',
-      },
-      {
-        q: 'Faz casamentos fora de Lisboa — Sintra, Cascais, Comporta, Algarve?',
-        a: 'Sim. Trabalho em todas as regiões de casamento de Portugal — Sintra, Cascais, Comporta, o Douro e o Algarve — e também em casamentos de destino noutros países da Europa. Viagem e, quando necessário, alojamento são orçamentados de forma transparente com a proposta.',
-      },
-      {
-        q: 'Aceita casamentos de destino no México?',
-        a: 'Sim — Guadalajara é onde nasci e onde aprendi a amar este ofício. Aceito um pequeno número de casamentos em Jalisco e por todo o México em cada ano. Pela viagem envolvida, as datas no México devem ser reservadas com bastante antecedência.',
-      },
-      {
-        q: 'Com quanta antecedência devo reservar?',
-        a: 'As reservas abrem 12 meses antes, e as datas de pico em Portugal — fins de semana de maio a outubro — costumam esgotar com 9 a 12 meses de antecedência. Dias de semana e época baixa são mais flexíveis, e pedidos de última hora são sempre bem-vindos: se estiver livre, sou sua.',
-      },
-      {
-        q: 'A prova está incluída — e como funciona?',
-        a: 'Todas as reservas de noiva incluem uma prova: uma sessão tranquila de duas horas, normalmente seis semanas antes do casamento, onde afinamos o look, testamos os produtos na sua pele e fotografamos o resultado em diferentes luzes — para que não haja surpresas no dia.',
-      },
-      {
-        q: 'A maquilhagem dura mesmo o dia todo — e resiste às lágrimas?',
-        a: 'Sim. Cada look é construído com produtos de longa duração, à prova de câmara, e técnicas de camadas que aguentam desde os preparativos da manhã até ao first look, às lágrimas da cerimónia e à última dança. Recebe ainda um pequeno kit de retoque para ter por perto à noite.',
-      },
-    ],
-  },
+  faq: faq.pt,
   cta: {
     label: '07 — Vamos falar',
     heading: 'Fale-me do seu<br/><em>grande dia</em>.',
@@ -290,41 +211,6 @@ const pt: Content = {
       { type: 'Country', name: 'Portugal' },
       { type: 'City', name: 'Guadalajara' },
       { type: 'Country', name: 'México' },
-    ],
-    offers: [
-      {
-        name: 'Maquilhagem de noiva — dia do casamento',
-        description:
-          'Aplicação completa com preparação de pele, pestanas e acabamento de longa duração. Inclui uma prova.',
-        price: 450,
-      },
-      {
-        name: 'Maquilhagem para mães e damas de honor',
-        description: 'Looks coordenados para mães, irmãs e damas de honor.',
-        price: 120,
-      },
-      {
-        name: 'Casamentos de destino',
-        description:
-          'Maquilhagem de casamento em todo o Portugal, na Europa e no México, com acompanhamento de vários dias e retoques no local.',
-        price: null,
-      },
-      {
-        name: 'Editorial e eventos',
-        description: 'Maquilhagem para campanhas, lookbooks e eventos de marcas e revistas.',
-        price: 350,
-      },
-      {
-        name: 'Aulas privadas de automaquilhagem',
-        description:
-          'Sessão individual de duas horas em sua casa, com os seus próprios produtos.',
-        price: 180,
-      },
-      {
-        name: 'Ocasiões especiais',
-        description: 'Aplicações únicas para galas, batizados e aniversários.',
-        price: 140,
-      },
     ],
   },
 };
